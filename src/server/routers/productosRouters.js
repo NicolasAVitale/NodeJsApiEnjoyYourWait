@@ -5,7 +5,8 @@ function getProductosRouter(){
     const router = express.Router();
 
     router.get('/', (req, res) => {
-        res.status(200).send("Hola Mundo!")
+        var mensaje = {"Mensaje":"Hola Mundo!"};
+        res.status(200).send(mensaje)
     })
 
     return router;
