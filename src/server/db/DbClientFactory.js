@@ -1,24 +1,21 @@
-import MyMongoClient from './MyMongoClient.js'
-import NullDbClient from './NullDbClient.js'
 import Config from '../../../config.js'
+import MyMsSqlClient from './MyMsSqlClient.js'
 
-let mongoClient = null
+let sqlClient = null
 
-function getMongoClient() {
-    if (!mongoClient) {
-        mongoClient = new MyMongoClient()
+function getMsSqlClient() {
+    if (!sqlClient) {
+        sqlClient = new MyMsSqlClient()
     }
-    return mongoClient
+    return sqlClient
 }
 
-function getNullDbClient() {
-    return new NullDbClient()
-}
+
 
 class DbClientFactory {
     static getDbClient() {
         switch (Config.db.client) {
-            case 'mongodb': return getMongoClient()
+            case 'sql': return getMsSqlClient()
             default: return getNullDbClient()
         }
     }

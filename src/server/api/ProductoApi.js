@@ -1,1 +1,1 @@
-import Producto from '../models/Producto'
+import Producto from '../models/Producto.js'

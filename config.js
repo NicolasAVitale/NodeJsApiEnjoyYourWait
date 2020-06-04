@@ -1,13 +1,27 @@
-const currentEnv = process.env.ENV || 'dev'
+const currentEnv = process.env.ENV || 'prod'
 
 const envs = {
   prod: {
     port: process.env.PROD_PORT,
     mode: process.env.PROD_MODE,
     db: {
-      client: process.env.PROD_DB_CLIENT,
-      name: process.env.PROD_DB_NAME,
-      cnxStr: process.env.PROD_DB_CNX_STR
+      // user: process.env.PROD_MSSQL_DB_USER,
+      // password: process.env.PROD_MSSQL_DB_PASS,
+      // database: process.env.PROD_MSSQL_DB_DATABASE,
+      // server: process.env.PROD_MSSQL_DB_HOST,
+      user: 'eyw',
+      password: "eyw",
+      database: "EYW",
+      server: "localhost",
+      pool: {
+        max: 10,
+        min: 0,
+        idleTimeoutMillis: 30000
+      },
+      options: {
+        encrypt: false,
+        enableArithAbort: true
+      }
     }
   },
   dev: {

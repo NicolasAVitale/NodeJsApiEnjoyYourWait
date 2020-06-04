@@ -1,3 +1,4 @@
+
 class DbClient {
 
     async connect() {
@@ -8,13 +9,6 @@ class DbClient {
         throw new Error("falta implementar 'disconnect' en subclase!")
     }
 
-    async getClient() {
-        throw new Error("falta implementar 'getClient' en subclase!")
-    }
-
-    async getDb() {
-        throw new Error("falta implementar 'getDb' en subclase!")
-    }
 }
 
 export default DbClient
