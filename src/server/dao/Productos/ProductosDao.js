@@ -28,4 +28,4 @@ class ProductosDao {
 
 }
 
-export default EstudiantesDao
+export default ProductosDao

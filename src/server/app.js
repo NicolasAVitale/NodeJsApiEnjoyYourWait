@@ -1,5 +1,5 @@
 import express from 'express'
-import MyMsSqlClient from '../server/db/MyMsSqlClient.js'
+import DbClientFactory from '../server/db/DbClientFactory.js'
 import { getProductosRouter } from './routers/productosRouters.js';
 
 class App {
@@ -19,7 +19,7 @@ class App {
     }
 
     async start(port) {
-        await this.dbClient.connect()
+        // await this.dbClient.connect()
 
         if (!port) {
             port = 0
@@ -31,9 +31,9 @@ class App {
         })
     }
 
-    async disconnect() {
-        await this.MyMsSqlClient.disconnect();
-    }
+    // async disconnect() {
+    //     await this.dbClient.disconnect()
+    // }
 }
 
 export default App

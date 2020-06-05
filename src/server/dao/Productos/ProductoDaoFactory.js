@@ -1,4 +1,4 @@
-import ProductosDaoDb from './ProductosDaoDb'
+import ProductosDaoDb from './ProductosDaoDb.js'
 import Config from '../../../../config.js'
 
 

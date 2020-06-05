@@ -10,13 +10,12 @@ function getMsSqlClient() {
     return sqlClient
 }
 
-
-
 class DbClientFactory {
+
     static getDbClient() {
         switch (Config.db.client) {
             case 'sql': return getMsSqlClient()
-            default: return getNullDbClient()
+            // default: return getNullDbClient()
         }
     }
 }
