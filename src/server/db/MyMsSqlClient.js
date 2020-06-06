@@ -6,6 +6,7 @@ import DbClient from './DbClient.js'
 
 
 class MyMsSqlClient extends DbClient{
+
     constructor() {
         super()
         this.configConnection = Config.db
@@ -27,30 +28,15 @@ class MyMsSqlClient extends DbClient{
         }
     }                   
 
-    async query() {
-
-        try {
-            let pool = await this.connect()
-            let result1 = await pool.request()
-                .input('input_parameter', mssql.Int, 1)
-                .query('select * from dbo.Productos where idProducto = @input_parameter')
-
-            return (result1.recordset)
-        } catch (err) {
-            // ... error checks
-            console.error(err);
-        }
-    }   
-
     async fetchData(selectFields, tableName) {
 
         try {
 
             let pool = await this.connect()
-            let result1 = await pool.request()
+            let result = await pool.request()
                 .query(`select ${selectFields} from ${tableName}`)
 
-            return (result1.recordset)
+            return result.recordset
             
         } catch (err) {
             // ... error checks
@@ -63,20 +49,17 @@ class MyMsSqlClient extends DbClient{
         try {
 
             let pool = await this.connect()
-            let result1 = await pool.request()
+            let result = await pool.request()
                 .input('id', mssql.Int, id)
                 .query(`select ${selectFields} from ${tableName} where ${idName} = @id`)
 
-            return (result1.recordset)
+            return result
 
         } catch (err) {
             // ... error checks
             console.error(err);
         }
     }
-    
-        
-
 
 }
 

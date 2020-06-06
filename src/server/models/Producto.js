@@ -2,15 +2,20 @@ import Joi from '@hapi/joi';
 
 class Producto{
     
-    constructor(id, detalle){
-        this.id = id;
-        this.detalle = detalle;
+    constructor(detalle, nombre, precio, idPrecio, imagen = "null"){
+        this.nombre = nombre
+        this.precio = precio
+        this.idPrecio = idPrecio
+        this.imagen = imagen
+
     }
 
     static validar(producto){
         const productoSchema = {
-            id: Joi.number().integer().min(0),
-            detalle: Joi.string().alphanum().min(1).required()
+            nombre: Joi.string().alphanum().min(1).required(),
+            precio: Joi.number().integer().min(0).required(),
+            idTipo: Joi.number().integer().min(1).required(),
+            imagen: Joi.string().alphanum()
         }
 
         const { error } = Joi.validate(producto, productoSchema)
@@ -19,7 +24,5 @@ class Producto{
         }
     }
 }
-
-Producto.currentId = 0
 
 export default Producto

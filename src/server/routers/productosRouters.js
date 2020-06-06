@@ -13,7 +13,9 @@ function getProductosRouter(){
         try {
             const queryParams = new Map(Object.entries(req.query))
             const productos =  await productosApi.buscar(queryParams)
-            res.status(200).json(productos)
+
+            const respuesta = { "productos": productos, "cantidad": productos.length}
+            res.status(200).json(respuesta)
         } catch (err) {
             res.status(400).json(err)
         }
