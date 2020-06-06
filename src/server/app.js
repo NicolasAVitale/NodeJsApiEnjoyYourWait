@@ -1,5 +1,5 @@
 import express from 'express'
-import DbClientFactory from '../server/db/DbClientFactory.js'
+// import DbClientFactory from '../server/db/DbClientFactory.js'
 import { getProductosRouter } from './routers/productosRouters.js';
 import { getUsuariosRouter } from './routers/usuariosRouter.js'
 
