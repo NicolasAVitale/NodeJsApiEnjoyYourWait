@@ -1,5 +1,4 @@
 import ProductosDao from './ProductosDao.js'
-import Producto from '../../models/Producto.js'
 import CustomError from '../../errores/CustomError.js'
 import DbClientFactory from '../../db/DbClientFactory.js'
 
@@ -15,8 +14,8 @@ class ProductosDaoDb extends ProductosDao {
 
      async getAll() {
         try {
-            const productos = await this.client.fetchData('*', this.tabla)
-            return productos
+            const productosGet = await this.client.fetchData('*', this.tabla)
+            return productosGet
         } catch (err) {
             throw new CustomError(500, 'error al obtener todos los productos', err)
         }
@@ -24,8 +23,8 @@ class ProductosDaoDb extends ProductosDao {
 
     async getById(id) {
         try {
-            const productos = await this.client.getByID('*', this.tabla, id , this.idName)
-            return productos
+            const productoGet = await this.client.getByID('*', this.tabla, id , this.idName)
+            return productoGet
         } catch (err) {
             throw new CustomError(500, 'error al obtener todos los productos', err)
         }
