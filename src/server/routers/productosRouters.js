@@ -21,6 +21,30 @@ function getProductosRouter(){
         }
     })
 
+    router.post('/', async (req, res) => {
+
+        const productoAgregar = req.body
+        try {
+            const productoAgregado = await productosApi.agregar(productoAgregar)
+            res.status(201).json(productoAgregado)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
+    router.delete('/:id', async (req, res) => {
+
+        try {
+            await productosApi.eliminar(req.params.id)
+            const mensaje = { "mensaje": "eliminado correctamante" }
+            res.status(204).send()
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     return router;
 }
 

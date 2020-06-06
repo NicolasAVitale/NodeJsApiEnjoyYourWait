@@ -2,7 +2,7 @@ import Producto from '../models/Producto.js'
 
 function validarProductos(productos) {
     for (const producto of productos) {
-        validarEstudiante(estudiante)
+        validarProducto(productos)
     }
 }
 
@@ -13,6 +13,5 @@ function validarProducto(producto) {
 
 export {
     validarProductos,
-    validarProducto,
-
+    validarProducto
 }

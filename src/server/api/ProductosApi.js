@@ -22,6 +22,24 @@ class ProductosApi {
         
         return productos
     }
+    
+    async agregar(prodAgregar) {
+        ProductosApi.esProductoValido(prodAgregar)
+        const prodAgregado = await this.productosDao.add(prodAgregar)
+        return prodAgregado
+    }
+
+    async eliminar(id) {
+        await this.productosDao.deleteById(id)
+    }
+
+    static esProductoValido(producto) {
+        try {
+            Producto.validar(producto)
+        } catch (error) {
+            throw new CustomError(400, 'el producto a ingresar es invalido', error)
+        }
+    }
 }
 
 
