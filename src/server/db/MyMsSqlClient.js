@@ -61,6 +61,37 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
+    async deleteById(id, idName, tableName) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .query(`delete from ${tableName} where ${idName} = ${id}`)
+
+            return result
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    async insertProduct(nuevo, tableName) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('nombre', mssql.VarChar, nuevo.nombre)
+                .input('precio', mssql.Decimal(6,2), nuevo.precio)
+                .input('idTipo', mssql.Int, nuevo.idTipo)
+                .input('imagen', mssql.NVarChar, nuevo.imagen)
+                .query(`insert into ${tableName} values (@nombre,@precio,@idTipo,@imagen)`)
+
+            return result
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
 }
 
 export default MyMsSqlClient
