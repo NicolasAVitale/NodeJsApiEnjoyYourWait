@@ -1,6 +1,7 @@
 import express from 'express'
 import DbClientFactory from '../server/db/DbClientFactory.js'
 import { getProductosRouter } from './routers/productosRouters.js';
+import { getUsuariosRouter } from './routers/usuariosRouter.js'
 
 class App {
 
@@ -9,8 +10,8 @@ class App {
         app.use(express.json());
         app.set('json spaces', 4);
         app.use('/api/productos', getProductosRouter());
+        app.use('/api/usuarios', getUsuariosRouter());
         this.app = app;
-
         // this.dbClient = DbClientFactory.getDbClient()
     }
 
