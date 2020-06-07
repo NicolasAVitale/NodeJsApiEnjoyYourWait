@@ -29,6 +29,15 @@ class UsuariosApi {
         return userAgregado
     }
 
+    async actualizar(id, datosAactualizar) {
+        const usuarioActualizado = await this.usuariosDao.updateById(id, datosAactualizar)
+        return usuarioActualizado
+    }
+    
+    async eliminar(id) {
+        await this.usuariosDao.deleteById(id)
+    }
+
     static esUsuarioValido(usuario) {
         try {
             Usuario.validar(usuario)
