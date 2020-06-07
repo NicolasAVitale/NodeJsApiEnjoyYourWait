@@ -92,6 +92,20 @@ class MyMsSqlClient extends DbClient{
             console.error(err)
         }
     }
+
+    async updateById(id, idName, tableName, datos) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .query(`update ${tableName} SET ${datos} where ${idName} = ${id}`)
+
+            return result
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
 }
 
 export default MyMsSqlClient
