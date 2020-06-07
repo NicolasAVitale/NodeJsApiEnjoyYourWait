@@ -10,8 +10,8 @@ class ProductosDao {
         throw new CustomError(500, 'falta implementar add!')
     }
 
-    async getById(dni) {
-        throw new CustomError(500, 'falta implementar getByDni!')
+    async getById(id) {
+        throw new CustomError(500, 'falta implementar getById!')
     }
 
     async deleteById(id) {

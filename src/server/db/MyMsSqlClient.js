@@ -66,7 +66,7 @@ class MyMsSqlClient extends DbClient{
         try {
             let pool = await this.connect()
             let result = await pool.request()
-                .query(`delete from ${tableName} where ${idName} = ${id}`)
+                .query(`update ${tableName} where ${idName} = ${id}`)
 
             return result
 

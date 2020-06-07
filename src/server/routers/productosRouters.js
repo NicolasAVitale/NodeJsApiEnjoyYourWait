@@ -1,6 +1,5 @@
 import express from 'express';
 import ProductosApi from '../api/ProductosApi.js'
-import MyMsSqlClient from '../db/MyMsSqlClient.js'
 
 function getProductosRouter(){
 
