@@ -44,6 +44,19 @@ function getProductosRouter(){
 
     })
 
+    router.put('/:id', async (req, res) => {
+
+        const datos = req.body
+        try {
+            await productosApi.actualizar(req.params.id, datos)
+            const mensaje = { "mensaje": "editado correctamante" }
+            res.status(204).send()
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     return router;
 }
 

@@ -40,6 +40,49 @@ class ProductosDaoDb extends ProductosDao {
         
     }
 
+    async updateById(id, datosAcambiar) {
+        let result
+        try {
+            
+            if (datosAcambiar.Imagen == undefined) {
+                datosAcambiar.Imagen = await this.getCampoById('Imagen',id)
+                const imagen = new Map(Object.entries(datosAcambiar.Imagen))
+                datosAcambiar.Imagen = imagen.get('0').Imagen
+            }
+            if (datosAcambiar.Precio == undefined) {
+                datosAcambiar.Precio = await this.getCampoById('Precio', id)
+                const precio = new Map(Object.entries(datosAcambiar.Precio))
+                datosAcambiar.Precio = precio.get('0').Precio
+            }
+            if (datosAcambiar.Nombre == undefined) {
+                datosAcambiar.Nombre = await this.getCampoById('Nombre', id)
+                const nombre = new Map(Object.entries(datosAcambiar.Nombre))
+                datosAcambiar.Nombre = nombre.get('0').Nombre
+            }
+
+            const datos = `Nombre = '${datosAcambiar.Nombre}', Precio = ${datosAcambiar.Precio}, Imagen = '${datosAcambiar.Imagen}'`
+            result = await this.client.updateById(id, this.idName, this.tabla, datos)
+        } catch (error) {
+            throw new CustomError(500, `error al editar el producto`, error)
+        }
+
+        if (result.rowsAffected == 0) {
+            throw new CustomError(404, `no existe un producto para editar con id: ${id}`, { id })
+        } else {
+            return result
+        }
+
+    }
+
+    async getCampoById(data,id){
+        try {
+            const campoGet = await this.client.getByID(data, this.tabla, id, this.idName)
+            return campoGet.recordset
+        } catch (err) {
+            throw new CustomError(500, 'error al obtener el campo', err)
+        }
+    }
+
     async deleteById(id) {
         let result
         try {

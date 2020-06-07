@@ -29,6 +29,11 @@ class ProductosApi {
         return prodAgregado
     }
 
+    async actualizar(id,datosAactualizar){
+        const prodActualizado = await this.productosDao.updateById(id, datosAactualizar)
+        return prodActualizado
+    }
+
     async eliminar(id) {
         await this.productosDao.deleteById(id)
     }
