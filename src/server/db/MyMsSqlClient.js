@@ -84,7 +84,7 @@ class MyMsSqlClient extends DbClient{
                 .input('precio', mssql.Decimal(6,2), nuevo.precio)
                 .input('idTipo', mssql.Int, nuevo.idTipo)
                 .input('imagen', mssql.NVarChar, nuevo.imagen)
-                .query(`insert into ${tableName} values (@nombre,@precio,@idTipo,@imagen)`)
+                .query(`insert into ${tableName} (Nombre,Precio,IdTipo,Imagen) values (@nombre,@precio,@idTipo,@imagen)`)
 
             return result
 
