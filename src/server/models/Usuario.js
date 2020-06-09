@@ -16,14 +16,14 @@ class Usuario {
     static validar(usuario) {
 
         const usuarioSchema = {
-            dni: Joi.string().alphanum().min(1).max(150).required(),
-            nombre: Joi.number().integrer().min(1).required(),
-            apellido: Joi.number().integer().min(1).required(),
-            email: Joi.string().alphanum().min(0).max(100),
-            fechaNacimiento: Joi.string().alphanum().min(0).max(100),
+            dni: Joi.number().integer().min(1).max(99999999).required(),
+            nombre: Joi.string().alphanum().min(1).max(150).required(),
+            apellido: Joi.string().alphanum().min(1).max(150).required(),
+            email: Joi.string().email().required(),
+            fechaNacimiento: Joi.date().required(),
             contrasena: Joi.string().alphanum().min(0).max(100),
-            idRol: Joi.string().alphanum().min(0).max(100),
-            fechaPrimerIngreso: Joi.string().alphanum().min(0).max(100),
+            idRol: Joi.number().integer().min(1).required(),
+            fechaPrimerIngreso: Joi.date().required()
         }
 
         const { error } = usuarioSchema.validate(usuario)
