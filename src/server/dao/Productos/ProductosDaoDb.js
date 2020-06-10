@@ -59,8 +59,13 @@ class ProductosDaoDb extends ProductosDao {
                 const nombre = new Map(Object.entries(datosAcambiar.Nombre))
                 datosAcambiar.Nombre = nombre.get('0').Nombre
             }
+            if (datosAcambiar.Valido == undefined) {
+                datosAcambiar.Valido = await this.getCampoById('Valido', id)
+                const valido = new Map(Object.entries(datosAcambiar.Valido))
+                datosAcambiar.Valido = valido.get('0').Valido
+            }
 
-            const datos = `Nombre = '${datosAcambiar.Nombre}', Precio = ${datosAcambiar.Precio}, Imagen = '${datosAcambiar.Imagen}'`
+            const datos = `Nombre = '${datosAcambiar.Nombre}', Precio = ${datosAcambiar.Precio}, Imagen = '${datosAcambiar.Imagen}', Valido = ${datosAcambiar.valido}`
             result = await this.client.updateById(id, this.idName, this.tabla, datos)
         } catch (error) {
             throw new CustomError(500, `error al editar el producto`, error)
