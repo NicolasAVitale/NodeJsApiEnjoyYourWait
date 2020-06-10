@@ -93,6 +93,29 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
+    async insertUsuario(nuevo, tableName) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('dni', mssql.VarChar(50), nuevo.dni)
+                .input('nombre', mssql.VarChar(50), nuevo.nombre)
+                .input('apellido', mssql.VarChar(50), nuevo.apellido)
+                .input('email', mssql.VarChar(50), nuevo.email)
+                .input('fechaNacimiento', mssql.Date, nuevo.fechaNacimiento)
+                .input('contrasena', mssql.VarChar(50), nuevo.contrasena)
+                .input('idRol', mssql.Int, nuevo.idRol)
+                .input('fechaPrimerIngreso', mssql.Date, nuevo.fechaPrimerIngreso)
+                .input('activo', mssql.TinyInt, nuevo.activo)
+                .query(`insert into ${tableName} values (@dni,@nombre,@apellido,@email,@fechaNacimiento,@contrasena,@idRol,@FechaPrimerIngreso,@activo)`)
+
+            return result
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
     async updateById(id, idName, tableName, datos) {
 
         try {
