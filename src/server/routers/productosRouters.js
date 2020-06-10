@@ -55,6 +55,32 @@ function getProductosRouter(){
 
     })
 
+    router.put('/activar/:id', async (req, res) => {
+
+        const datos = req.body
+        try {
+            await productosApi.activar(req.params.id, datos)
+            const mensaje = { "mensaje": "activado correctamante" }
+            res.status(204).send()
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
+    router.put('/desactivar/:id', async (req, res) => {
+
+        const datos = req.body
+        try {
+            await productosApi.desactivar(req.params.id, datos)
+            const mensaje = { "mensaje": "desactivado correctamante" }
+            res.status(204).send()
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     return router;
 }
 

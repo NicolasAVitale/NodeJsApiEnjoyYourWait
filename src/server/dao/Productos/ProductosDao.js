@@ -18,6 +18,14 @@ class ProductosDao {
         throw new CustomError(500, 'falta implementar deleteById!')
     }
 
+    async enable(id) {
+        throw new CustomError(500, 'falta implementar enable!')
+    }
+
+    async disable(id) {
+        throw new CustomError(500, 'falta implementar disable!')
+    }
+
     async deleteAll() {
         throw new CustomError(500, 'falta implementar deleteAll!')
     }

@@ -34,8 +34,12 @@ class ProductosApi {
         return prodActualizado
     }
 
-    async eliminar(id) {
-        await this.productosDao.deleteById(id)
+    async activar(id) {
+        await this.productosDao.enable(id)
+    }
+
+    async desactivar(id) {
+        await this.productosDao.disable(id)
     }
 
     static esProductoValido(producto) {
