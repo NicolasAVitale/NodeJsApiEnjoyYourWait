@@ -50,7 +50,7 @@ function getUsuariosRouter() {
         try {
             await usuariosApi.actualizar(req.params.id, datos)
             const mensaje = { "mensaje": "editado correctamante" }
-            res.status(204).send()
+            res.status(204).json(mensaje)
         } catch (err) {
             res.status(err.estado).json(err)
         }
