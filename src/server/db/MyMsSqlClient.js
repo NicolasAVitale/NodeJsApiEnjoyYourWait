@@ -82,9 +82,9 @@ class MyMsSqlClient extends DbClient{
             let result = await pool.request()
                 .input('nombre', mssql.VarChar, nuevo.nombre)
                 .input('precio', mssql.Decimal(6,2), nuevo.precio)
-                .input('idTipo', mssql.Int, nuevo.idTipo)
+                .input('idTipo', mssql.Int, nuevo.idtipo)
                 .input('imagen', mssql.NVarChar, nuevo.imagen)
-                .query(`insert into ${tableName} (Nombre,Precio,IdTipo,Imagen) values (@nombre,@precio,@idTipo,@imagen)`)
+                .query(`insert into ${tableName} (nombre,precio,idTipo,imagen) values (@nombre,@precio,@idTipo,@imagen)`)
 
             return result
 
