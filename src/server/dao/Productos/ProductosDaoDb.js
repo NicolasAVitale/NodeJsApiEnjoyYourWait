@@ -44,28 +44,28 @@ class ProductosDaoDb extends ProductosDao {
         let result
         try {
             
-            if (datosAcambiar.Imagen == undefined) {
-                datosAcambiar.Imagen = await this.getCampoById('Imagen',id)
-                const imagen = new Map(Object.entries(datosAcambiar.Imagen))
-                datosAcambiar.Imagen = imagen.get('0').Imagen
+            if (datosAcambiar.imagen == undefined) {
+                datosAcambiar.imagen = await this.getCampoById('imagen',id)
+                const imagen = new Map(Object.entries(datosAcambiar.imagen))
+                datosAcambiar.imagen = imagen.get('0').imagen
             }
-            if (datosAcambiar.Precio == undefined) {
-                datosAcambiar.Precio = await this.getCampoById('Precio', id)
+            if (datosAcambiar.precio == undefined) {
+                datosAcambiar.precio = await this.getCampoById('precio', id)
                 const precio = new Map(Object.entries(datosAcambiar.Precio))
-                datosAcambiar.Precio = precio.get('0').Precio
+                datosAcambiar.precio = precio.get('0').precio
             }
-            if (datosAcambiar.Nombre == undefined) {
-                datosAcambiar.Nombre = await this.getCampoById('Nombre', id)
-                const nombre = new Map(Object.entries(datosAcambiar.Nombre))
-                datosAcambiar.Nombre = nombre.get('0').Nombre
+            if (datosAcambiar.nombre == undefined) {
+                datosAcambiar.ombre = await this.getCampoById('nombre', id)
+                const nombre = new Map(Object.entries(datosAcambiar.nombre))
+                datosAcambiar.nombre = nombre.get('0').nombre
             }
-            if (datosAcambiar.Valido == undefined) {
-                datosAcambiar.Valido = await this.getCampoById('Valido', id)
-                const valido = new Map(Object.entries(datosAcambiar.Valido))
-                datosAcambiar.Valido = valido.get('0').Valido
+            if (datosAcambiar.activo == undefined) {
+                datosAcambiar.activo = await this.getCampoById('activo', id)
+                const activo = new Map(Object.entries(datosAcambiar.activo))
+                datosAcambiar.activo = activo.get('0').activo
             }
 
-            const datos = `Nombre = '${datosAcambiar.Nombre}', Precio = ${datosAcambiar.Precio}, Imagen = '${datosAcambiar.Imagen}', Valido = ${datosAcambiar.valido}`
+            const datos = `nombre = '${datosAcambiar.nombre}', precio = ${datosAcambiar.precio}, imagen = '${datosAcambiar.imagen}', activo = ${datosAcambiar.activo}`
             result = await this.client.updateById(id, this.idName, this.tabla, datos)
         } catch (error) {
             throw new CustomError(500, `error al editar el producto`, error)
@@ -76,7 +76,6 @@ class ProductosDaoDb extends ProductosDao {
         } else {
             return result
         }
-
     }
 
     async getCampoById(data,id){
@@ -107,7 +106,7 @@ class ProductosDaoDb extends ProductosDao {
     async enable(id) {
         let result
         try {
-            const datos = `Activo = 1`
+            const datos = `activo = 1`
             result = await this.client.updateById(id, this.idName, this.tabla, datos)
         } catch (err) {
             throw new CustomError(500, 'error al activar el producto', err)
@@ -124,7 +123,7 @@ class ProductosDaoDb extends ProductosDao {
     async disable(id) {
         let result
         try {
-            const datos = `Activo = 0`
+            const datos = `activo = 0`
             result = await this.client.updateById(id, this.idName, this.tabla, datos)
         } catch (err) {
             throw new CustomError(500, 'error al desactivar el producto', err)
