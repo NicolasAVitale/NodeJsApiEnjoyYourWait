@@ -76,13 +76,12 @@ class MyMsSqlClient extends DbClient{
     }
 
     async insertProduct(nuevo, tableName) {
-
         try {
             let pool = await this.connect()
             let result = await pool.request()
                 .input('nombre', mssql.VarChar, nuevo.nombre)
                 .input('precio', mssql.Decimal(6,2), nuevo.precio)
-                .input('idTipo', mssql.Int, nuevo.idtipo)
+                .input('idTipo', mssql.Int, nuevo.idTipo)
                 .input('imagen', mssql.NVarChar, nuevo.imagen)
                 .query(`insert into ${tableName} (nombre,precio,idTipo,imagen) values (@nombre,@precio,@idTipo,@imagen)`)
 
