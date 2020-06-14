@@ -68,6 +68,29 @@ class Cliente {
         })
         return productos
     }
+
+    async agregarUsuario(usuario) {
+        const postOpt = {
+            method: 'POST',
+            uri: this.serverUrl,
+            json: true
+        }
+        if (usuario) {
+            postOpt.body = usuario
+        }
+
+        const user = await request(postOpt)
+        return user
+    }
+
+    async buscarUsuarios() {
+        const usuarios = await request({
+            method: 'GET',
+            uri: this.serverUrl,
+            json: true
+        })
+        return usuarios
+    }
 }
 
 export default Cliente
