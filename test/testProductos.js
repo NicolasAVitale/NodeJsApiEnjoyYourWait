@@ -1,6 +1,23 @@
 import Cliente from './client.js'
 import Servidor from '../src/server/app.js'
 
+let token = null
+
+async function obtenerToken(cli){
+    let testFailed = false;
+    let msg = 'get: ok';
+    try{
+        token = await cli.obtenerToken({
+            nombre: 'jonathan',
+            contrasena: '123'
+        })
+    } catch (err) {
+        testFailed = true;
+        msg = 'get: ' + err.message; 
+    }
+    return { testFailed, msg }
+}
+
 async function agregarProducto(cli){
     let testFailed = false;
     let msg = 'post with body: ok';
@@ -12,7 +29,7 @@ async function agregarProducto(cli){
             idTipo: 1,
             imagen: 'papas_fritas.jpg',
             activo: 1
-        })
+        }, token)
     } catch (err) {
         testFailed = true;
         msg = 'post with body: ' + err.message; 
@@ -24,7 +41,7 @@ async function buscarProductos(cli){
     let testFailed = false;
     let msg = 'get: ok';
     try{
-        await cli.buscarProductos()
+        await cli.buscarProductos(token)
     } catch (err) {
         testFailed = true;
         msg = 'get: ' + err.message; 
@@ -36,7 +53,7 @@ async function buscarProductoPorId(cli){
     let testFailed = false;
     let msg = 'get: ok';
     try{
-        await cli.buscarProductoPorId({id: '59'})
+        await cli.buscarProductoPorId({id: '59'}, token)
     } catch (err) {
         testFailed = true;
         msg = 'get: ' + err.message; 
@@ -48,20 +65,20 @@ async function actualizarProducto(cli){
     let testFailed = false;
     let msg = 'put: ok';
     try{
-        let producto = await cli.buscarProductoPorId({id: '67'})
+        let producto = await cli.buscarProductoPorId({id: '67'}, token)
         
         await cli.actualizarProducto('67',{
             nombre: 'tira de asado',
             precio: '220.10',
             imagen: 'tira_de_asado.jpg'
-        })
+        }, token)
         
         // se restaura el producto para que vuelva a tener los valores iniciales
         await cli.actualizarProducto('67',{
             nombre: producto.recordset[0].nombre,
             precio: producto.recordset[0].precio,
             imagen: producto.recordset[0].imagen
-        })
+        }, token)
     } catch (err) {
         testFailed = true;
         msg = 'put: ' + err.message; 
@@ -73,10 +90,10 @@ async function activarProducto(cli){
     let testFailed = false;
     let msg = 'put: ok';
     try{
-        await cli.activarProducto('60')
+        await cli.activarProducto('60', token)
 
         // se restaura el producto para que vuelva a estar inactivo
-        await cli.desactivarProducto('60')
+        await cli.desactivarProducto('60', token)
     } catch (err) {
         testFailed = true;
         msg = 'put: ' + err.message; 
@@ -88,10 +105,10 @@ async function desactivarProducto(cli){
     let testFailed = false;
     let msg = 'put: ok';
     try{
-        await cli.desactivarProducto('60')
+        await cli.desactivarProducto('60', token)
 
         // se restaura el producto para que vuelva a estar activo
-        await cli.activarProducto('60')
+        await cli.activarProducto('60', token)
     } catch (err) {
         testFailed = true;
         msg = 'put: ' + err.message; 
@@ -101,6 +118,7 @@ async function desactivarProducto(cli){
 
 async function main() {
     const tests = [
+        obtenerToken,
         agregarProducto,
         buscarProductos,
         buscarProductoPorId,
