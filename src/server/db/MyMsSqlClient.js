@@ -75,6 +75,20 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
+    async calculateTimeById(id, capacidad, tiempo) {
+        try {
+            let pool = await this.connect()
+            let query = "exec spCalcularTiempoEspera @idCliente='" + id + "', @capacidadMax='" + capacidad + "', @tiempoEstimado='" + tiempo + "';";
+            let result = await pool.request()
+                .query(query)
+
+            return result
+            
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
     async insertProduct(nuevo, tableName) {
         try {
             let pool = await this.connect()
