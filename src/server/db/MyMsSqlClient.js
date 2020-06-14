@@ -165,7 +165,7 @@ class MyMsSqlClient extends DbClient{
             let result = await pool.request()
                 .input('nombre', mssql.VarChar(50), name)
                 .input('contrasena', mssql.VarChar(50), pass)
-                .query(`select ${selectFields} from ${tableName} where Nombre = '${name}' and Contrasena = '${pass}'`)
+                .query(`select ${selectFields} from ${tableName} where nombre = '${name}' and contrasena = '${pass}'`)
 
             return result
 

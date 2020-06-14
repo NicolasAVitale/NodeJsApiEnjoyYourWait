@@ -65,7 +65,7 @@ class UsuariosDaoDb extends UsuariosDao {
                 datosAcambiar.Dni = dni.get('0').Dni
             }
 
-            const datos = `Dni = '${datosAcambiar.Dni}',  Email = '${datosAcambiar.Email}'`
+            const datos = `dni = '${datosAcambiar.Dni}',  email = '${datosAcambiar.Email}'`
             result = await this.client.updateById(id, this.idName, this.tabla, datos)
         } catch (error) {
             throw new CustomError(500, `error al editar el usuario`, error)

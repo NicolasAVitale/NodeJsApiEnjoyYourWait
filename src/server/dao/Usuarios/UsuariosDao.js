@@ -10,7 +10,7 @@ class UsuariosDao {
         throw new CustomError(500, 'falta implementar add!')
     }
 
-    async getById(dni) {
+    async getById(id) {
         throw new CustomError(500, 'falta implementar getByDni!')
     }
 
