@@ -2,9 +2,9 @@ import request from 'request-promise-native'
 
 class Cliente {
 
-    constructor(ipDir, puerto) {
+    constructor(ipDir, puerto, entidad) {
         this.puerto = puerto
-        this.serverUrl = `${ipDir}:${puerto}/api/productos`
+        this.serverUrl = `${ipDir}:${puerto}/api/${entidad}`
     }
 
     async agregarProducto(producto) {
@@ -28,6 +28,26 @@ class Cliente {
             json: true
         })
         return productos
+    }
+
+    async buscarProductoPorId(params) {
+        const producto = await request({
+            method: 'GET',
+            uri: this.serverUrl,
+            qs: params,
+            json: true
+        })
+        return producto
+    }
+
+    async actualizarProducto(id, datos) {
+        const producto = await request({
+            method: 'PUT',
+            uri: this.serverUrl + '/' + id,
+            body: datos,
+            json: true
+        })
+        return producto
     }
 
     async activarProducto(id) {
