@@ -75,8 +75,36 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
-    async insertProduct(nuevo, tableName) {
+    async calculateTimeById(id, capacidad, tiempo) {
+        try {
+            let pool = await this.connect()
+            let query = "exec spCalcularTiempoEspera @idCliente=" + id + ", @capacidadMax=" + capacidad + ", @tiempoEstimado=" + tiempo + ";";
+            let result = await pool.request()
+                .query(query)
 
+            return result["recordset"][0]
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    
+    async updateRestaurantClientState(tiempo) {
+        try {
+            let pool = await this.connect()
+            let query = "exec spActualizarEstadoClientesEnRestaurante @tiempoEstimado=" + tiempo + ";";
+            let result = await pool.request()
+                .query(query)
+
+            return result
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    async insertProduct(nuevo, tableName) {
         try {
             let pool = await this.connect()
             let result = await pool.request()
@@ -84,7 +112,7 @@ class MyMsSqlClient extends DbClient{
                 .input('precio', mssql.Decimal(6,2), nuevo.precio)
                 .input('idTipo', mssql.Int, nuevo.idTipo)
                 .input('imagen', mssql.NVarChar, nuevo.imagen)
-                .query(`insert into ${tableName} (Nombre,Precio,IdTipo,Imagen) values (@nombre,@precio,@idTipo,@imagen)`)
+                .query(`insert into ${tableName} (nombre,precio,idTipo,imagen) values (@nombre,@precio,@idTipo,@imagen)`)
 
             return result
 

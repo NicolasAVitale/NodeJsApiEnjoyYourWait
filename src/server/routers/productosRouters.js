@@ -1,5 +1,6 @@
 import express from 'express';
 import ProductosApi from '../api/ProductosApi.js'
+import jwtMdw from '../middleware/jwtMiddleware.js'
 
 function getProductosRouter(){
 
@@ -7,7 +8,7 @@ function getProductosRouter(){
 
     const productosApi = new ProductosApi()
 
-    router.get('/', async (req, res) => {
+    router.get('/', jwtMdw.ensureAuthenticated, async (req, res) => {
         
         try {
             const queryParams = new Map(Object.entries(req.query))
@@ -18,7 +19,7 @@ function getProductosRouter(){
         }
     })
 
-    router.post('/', async (req, res) => {
+    router.post('/', jwtMdw.ensureAuthenticated, async (req, res) => {
 
         const productoAgregar = req.body
         try {
@@ -30,7 +31,7 @@ function getProductosRouter(){
 
     })
 
-    router.delete('/:id', async (req, res) => {
+    router.delete('/:id', jwtMdw.ensureAuthenticated, async (req, res) => {
 
         try {
             await productosApi.eliminar(req.params.id)
@@ -42,7 +43,7 @@ function getProductosRouter(){
 
     })
 
-    router.put('/:id', async (req, res) => {
+    router.put('/:id', jwtMdw.ensureAuthenticated, async (req, res) => {
 
         const datos = req.body
         try {
@@ -55,7 +56,7 @@ function getProductosRouter(){
 
     })
 
-    router.put('/activar/:id', async (req, res) => {
+    router.put('/activar/:id', jwtMdw.ensureAuthenticated, async (req, res) => {
 
         const datos = req.body
         try {
@@ -68,7 +69,7 @@ function getProductosRouter(){
 
     })
 
-    router.put('/desactivar/:id', async (req, res) => {
+    router.put('/desactivar/:id', jwtMdw.ensureAuthenticated, async (req, res) => {
 
         const datos = req.body
         try {

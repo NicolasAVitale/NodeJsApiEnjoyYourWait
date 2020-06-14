@@ -8,7 +8,7 @@
     "start_nodemon": "nodemon -r dotenv/config src/main.js",
     "start": "node -r dotenv/config src/main.js",
     "startProd": "ENV=prod nodemon -r dotenv/config src/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node -r dotenv/config test/testProductos.js"
   },
   "author": "Jessica Vaks - Jonathan Sztajnhart - Micaela Schejner Aquino - Nicolás Vitale",
   "license": "ISC",

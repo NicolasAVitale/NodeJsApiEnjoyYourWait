@@ -2,6 +2,7 @@ import express from 'express'
 // import DbClientFactory from '../server/db/DbClientFactory.js'
 import { getProductosRouter } from './routers/productosRouters.js';
 import { getUsuariosRouter } from './routers/usuariosRouter.js'
+import { getFilaClientesRouter } from './routers/filaClientesRouter.js'
 import passport from 'passport'
 import  MyPassport from "./passport.js";
 
@@ -18,6 +19,7 @@ class App {
         app.use(passport.initialize());
         app.use('/api/productos', getProductosRouter());
         app.use('/api/usuarios', getUsuariosRouter());
+        app.use('/api/filaclientes', getFilaClientesRouter());
         this.app = app;
         // this.dbClient = DbClientFactory.getDbClient()
     }
