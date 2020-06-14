@@ -11,9 +11,12 @@ class FilaClientesDaoDb extends FilaClientesDao {
         this.idName = 'idCliente'
     }
 
-    async calculateTimebyId(id, capacidad, tiempo) {
+    async calculateTimeById(id, capacidad, tiempo) {
         try {
-            const tiempoEstimado = await this.client.calculateTimebyId(id, capacidad, tiempo)
+            console.log(id)
+            console.log(capacidad)
+            console.log(tiempo)
+            const tiempoEstimado = await this.client.calculateTimeById(id, capacidad, tiempo)
             return tiempoEstimado
         } catch (err) {
             throw new CustomError(500, 'error al calcular el tiempo estimado de espera', err)

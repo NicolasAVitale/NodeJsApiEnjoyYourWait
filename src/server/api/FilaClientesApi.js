@@ -13,7 +13,7 @@ class FilaClientesApi {
             const id = parseInt(queryParams.get('id'))
             const capacidad = parseInt(queryParams.get('capacidad'))
             const tiempo = parseInt(queryParams.get('tiempo'))
-            tiempoEstimado = await this.filaClientesDao.calculateTimebyId(id, capacidad, tiempo)
+            tiempoEstimado = await this.filaClientesDao.calculateTimeById(id, capacidad, tiempo)
         } else {
             throw new CustomError(400, 'parametros de consulta invalidos', queryParams)
         }

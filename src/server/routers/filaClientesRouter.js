@@ -10,7 +10,7 @@ function getFilaClientesRouter(){
     router.get('/:id/:capacidad/:tiempo', async (req, res) => {
         
         try {
-            const queryParams = new Map(Object.entries(req.query))
+            const queryParams = new Map(Object.entries(req.params))
             const tiempoEstimado =  await filaClientesApi.calcularTiempoEstimado(queryParams)
             res.status(200).json(tiempoEstimado)
         } catch (err) {
