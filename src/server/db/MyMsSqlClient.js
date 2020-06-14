@@ -82,7 +82,7 @@ class MyMsSqlClient extends DbClient{
             let result = await pool.request()
                 .query(query)
 
-            return result["recordset"]
+            return result["recordset"][0]
 
         } catch (err) {
             console.error(err)
