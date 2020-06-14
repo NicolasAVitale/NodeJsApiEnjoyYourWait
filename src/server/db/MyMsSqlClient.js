@@ -129,6 +129,23 @@ class MyMsSqlClient extends DbClient{
             console.error(err)
         }
     }
+
+    async getByNameAndPass(selectFields, tableName, name,pass) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('nombre', mssql.VarChar(50), name)
+                .input('contrasena', mssql.VarChar(50), pass)
+                .query(`select ${selectFields} from ${tableName} where Nombre = '${name}' and Contrasena = '${pass}'`)
+
+            return result
+
+        } catch (err) {
+            // ... error checks
+            console.error(err);
+        }
+    }
 }
 
 export default MyMsSqlClient

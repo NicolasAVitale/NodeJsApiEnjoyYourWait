@@ -88,6 +88,15 @@ class UsuariosDaoDb extends UsuariosDao {
         }
     }
 
+    async getByNameAndPass(name,pass) {
+        try {
+            const usuarios = await this.client.getByNameAndPass('*', this.tabla, name, pass)
+            return usuarios
+        } catch (err) {
+            throw new CustomError(500, 'error al obtener todos los usuarios', err)
+        }
+    }
+
 }
 
 

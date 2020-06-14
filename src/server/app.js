@@ -2,13 +2,20 @@ import express from 'express'
 // import DbClientFactory from '../server/db/DbClientFactory.js'
 import { getProductosRouter } from './routers/productosRouters.js';
 import { getUsuariosRouter } from './routers/usuariosRouter.js'
+import passport from 'passport'
+import  MyPassport from "./passport.js";
+
 
 class App {
 
     constructor() {
         const app = express();
+        
         app.use(express.json());
         app.set('json spaces', 4);
+        
+        new MyPassport()
+        app.use(passport.initialize());
         app.use('/api/productos', getProductosRouter());
         app.use('/api/usuarios', getUsuariosRouter());
         this.app = app;

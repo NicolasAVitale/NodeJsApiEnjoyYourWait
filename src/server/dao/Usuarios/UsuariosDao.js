@@ -26,6 +26,10 @@ class UsuariosDao {
         throw new CustomError(500, 'falta implementar updateById!')
     }
 
+    async getByNameAndPass(name,pass) {
+        throw new CustomError(500, 'falta implementar getByNameAndPass!')
+    }
+
 }
 
 export default UsuariosDao

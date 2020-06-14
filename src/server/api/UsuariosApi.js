@@ -45,6 +45,22 @@ class UsuariosApi {
             throw new CustomError(400, 'el usuario a ingresar es invalido', error)
         }
     }
+
+    async findUserByName(nombre, pass) {
+        try {
+            return await this.usuariosDao.getByNameAndPass(nombre,pass)
+        } catch (error) {
+            throw new CustomError(400, 'No se encontraron datos', error)
+        }
+    }
+
+    async findUserById(id) {
+        try {
+            return await this.usuariosDao.getById(id)
+        } catch (error) {
+            throw new CustomError(400, 'No se encontraron datos', error)
+        }
+    }
 }
 
 
