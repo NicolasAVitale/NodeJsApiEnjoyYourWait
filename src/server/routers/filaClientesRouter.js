@@ -18,6 +18,18 @@ function getFilaClientesRouter(){
         }
     })
 
+    router.put('/:tiempo', async (req, res) => {
+
+        try {
+            await filaClientesApi.actualizarEstadoClientesEnRestaurante(req.params.tiempo)
+            const mensaje = { "mensaje": "editado correctamante" }
+            res.status(204).send()
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     return router;
 }
 

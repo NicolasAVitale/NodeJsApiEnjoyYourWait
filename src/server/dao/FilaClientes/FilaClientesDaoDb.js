@@ -19,6 +19,16 @@ class FilaClientesDaoDb extends FilaClientesDao {
             throw new CustomError(500, 'error al calcular el tiempo estimado de espera', err)
         }
     }
+
+    async updateRestaurantClientState(tiempo) {
+        let result
+        try {
+            result = await this.client.updateRestaurantClientState(id, capacidad, tiempo)
+            return result
+        } catch (err) {
+            throw new CustomError(500, 'error al actualizar el estado de los clientes dentro del restaurante', err)
+        }
+    }
 }
 
 
