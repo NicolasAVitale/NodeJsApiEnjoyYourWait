@@ -21,15 +21,11 @@ class FilaClientesApi {
         return tiempoEstimado
     }
 
-    async actualizarEstadoClientesEnRestaurante(queryParams) {
-        if (queryParams.has('tiempo')) {
-            const tiempo = parseInt(queryParams.get('tiempo'))
-            tiempoEstimado = await this.filaClientesDao.updateRestaurantClientState(tiempo)
-        } else {
-            throw new CustomError(400, 'parametro para actualizar invalido', queryParams)
-        }
+    async actualizarEstadoClientesEnRestaurante(tiempo) {
+        let estadoActualizado
+        estadoActualizado = await this.filaClientesDao.updateRestaurantClientState(tiempo)
         
-        return tiempoEstimado
+        return estadoActualizado
     }
 }
 

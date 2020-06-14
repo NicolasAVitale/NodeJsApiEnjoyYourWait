@@ -23,7 +23,7 @@ class FilaClientesDaoDb extends FilaClientesDao {
     async updateRestaurantClientState(tiempo) {
         let result
         try {
-            result = await this.client.updateRestaurantClientState(id, capacidad, tiempo)
+            result = await this.client.updateRestaurantClientState(tiempo)
             return result
         } catch (err) {
             throw new CustomError(500, 'error al actualizar el estado de los clientes dentro del restaurante', err)

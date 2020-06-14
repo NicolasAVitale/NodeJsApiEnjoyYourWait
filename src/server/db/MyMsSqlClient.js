@@ -93,7 +93,7 @@ class MyMsSqlClient extends DbClient{
     async updateRestaurantClientState(tiempo) {
         try {
             let pool = await this.connect()
-            let query = "exec spActualizarEstadoClientesEnRestaurante @tiempoEstimado='" + tiempo + "';";
+            let query = "exec spActualizarEstadoClientesEnRestaurante @tiempoEstimado=" + tiempo + ";";
             let result = await pool.request()
                 .query(query)
 

@@ -19,7 +19,6 @@ function getFilaClientesRouter(){
     })
 
     router.put('/:tiempo', async (req, res) => {
-
         try {
             await filaClientesApi.actualizarEstadoClientesEnRestaurante(req.params.tiempo)
             const mensaje = { "mensaje": "editado correctamante" }
