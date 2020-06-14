@@ -2,26 +2,24 @@ import request from 'request-promise-native'
 
 class Cliente {
 
-    constructor(ipDir, puerto, entidad) {
+    constructor(ipDir, puerto) {
+        this.ipDir = ipDir
         this.puerto = puerto
-        this.serverUrl = `${ipDir}:${puerto}/api/${entidad}`
+        this.serverUrl = `${ipDir}:${puerto}/api/productos`
     }
 
     async obtenerToken(datosAutenticacion) {
-        console.log(datosAutenticacion)
         const postOpt = {
             method: 'POST',
-            uri: `http://127.0.0.1:${this.puerto}/api/usuarios/login`,
+            uri:  `${this.ipDir}:${this.puerto}/api/usuarios/login`,
             json: true
         }
-        console.log(postOpt.uri)
         if (datosAutenticacion) {
             postOpt.body = datosAutenticacion
         }
 
-        const prod = await request(postOpt)
-        console.log(prod.token)
-        return prod
+        const res = await request(postOpt)
+        return res.token
     }
 
     async agregarProducto(producto, token) {
@@ -30,15 +28,15 @@ class Cliente {
             uri: this.serverUrl,
             json: true,
             auth:{
-                "Bearer": token
+                "bearer": token
             }
         }
         if (producto) {
             postOpt.body = producto
         }
 
-        const prod = await request(postOpt)
-        return prod
+        const res = await request(postOpt)
+        return res.token
     }
 
     async buscarProductos(token) {
@@ -47,7 +45,7 @@ class Cliente {
             uri: this.serverUrl,
             json: true,
             auth:{
-                "Bearer": token
+                "bearer": token
             }
         })
         return productos
@@ -60,7 +58,7 @@ class Cliente {
             qs: params,
             json: true,
             auth:{
-                "Bearer": token
+                "bearer": token
             }
         })
         return producto
@@ -73,7 +71,7 @@ class Cliente {
             body: datos,
             json: true,
             auth:{
-                "Bearer": token
+                "bearer": token
             }
         })
         return producto
@@ -85,7 +83,7 @@ class Cliente {
             uri: this.serverUrl + '/activar/' + id, 
             json: true,
             auth:{
-                "Bearer": token
+                "bearer": token
             }
         })
         return productos
@@ -98,39 +96,10 @@ class Cliente {
             uri: this.serverUrl + '/desactivar/' + id, 
             json: true,
             auth:{
-                "Bearer": token
+                "bearer": token
             }
         })
         return productos
-    }
-
-    async agregarUsuario(usuario, token) {
-        const postOpt = {
-            method: 'POST',
-            uri: this.serverUrl,
-            json: true,
-            auth:{
-                "Bearer": token
-            }
-        }
-        if (usuario) {
-            postOpt.body = usuario
-        }
-
-        const user = await request(postOpt)
-        return user
-    }
-
-    async buscarUsuarios(token) {
-        const usuarios = await request({
-            method: 'GET',
-            uri: this.serverUrl,
-            json: true,
-            auth:{
-                "Bearer": token
-            }
-        })
-        return usuarios
     }
 }
 
