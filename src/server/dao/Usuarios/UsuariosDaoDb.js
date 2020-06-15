@@ -10,6 +10,8 @@ class UsuariosDaoDb extends UsuariosDao {
         this.client = DbClientFactory.getDbClient()
         this.tabla = 'dbo.Usuarios'
         this.idName = 'idUsuario'
+        this.nombreName = 'nombre'
+        this.passName = 'contrasena'
     }
 
      async getAll() {
@@ -90,7 +92,7 @@ class UsuariosDaoDb extends UsuariosDao {
 
     async getByNameAndPass(name,pass) {
         try {
-            const usuarios = await this.client.getByNameAndPass('*', this.tabla, name, pass)
+            const usuarios = await this.client.getByNameAndPass('*', this.tabla,name,pass, this.nombreName, this.passName)
             return usuarios
         } catch (err) {
             throw new CustomError(500, 'error al obtener todos los usuarios', err)

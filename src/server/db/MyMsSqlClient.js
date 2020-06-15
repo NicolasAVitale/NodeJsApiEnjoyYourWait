@@ -158,14 +158,14 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
-    async getByNameAndPass(selectFields, tableName, name,pass) {
+    async getByNameAndPass(selectFields, tableName, name,pass, nameName, passName) {
 
         try {
             let pool = await this.connect()
             let result = await pool.request()
                 .input('nombre', mssql.VarChar(50), name)
                 .input('contrasena', mssql.VarChar(50), pass)
-                .query(`select ${selectFields} from ${tableName} where nombre = '${name}' and contrasena = '${pass}'`)
+                .query(`select ${selectFields} from ${tableName} where ${nameName} = '${name}' and ${passName} = '${pass}'`)
 
             return result
 
