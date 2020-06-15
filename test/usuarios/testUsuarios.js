@@ -1,5 +1,22 @@
-import Cliente from './client.js'
-import Servidor from '../src/server/app.js'
+import Cliente from '../usuarios/clienteUsuarios.js'
+import Servidor from '../../src/server/app.js'
+
+let token = null
+
+async function obtenerToken(cli){
+    let testFailed = false;
+    let msg = 'get: ok';
+    try{
+        token = await cli.obtenerToken({
+            nombre: 'usuarioApi',
+            contrasena: 'usuario2020'
+        })
+    } catch (err) {
+        testFailed = true;
+        msg = 'get: ' + err.message; 
+    }
+    return { testFailed, msg }
+}
 
 async function agregarUsuario(cli){
     let testFailed = false;
@@ -16,7 +33,7 @@ async function agregarUsuario(cli){
             idRol: 2,
             fechaPrimerIngreso: '2020-06-13',
             activo: 1
-        })
+        }, token)
     } catch (err) {
         testFailed = true;
         msg = 'post with body: ' + err.message; 
@@ -28,7 +45,7 @@ async function buscarUsuarios(cli){
     let testFailed = false;
     let msg = 'get: ok';
     try{
-        await cli.buscarUsuarios()
+        await cli.buscarUsuarios(token)
     } catch (err) {
         testFailed = true;
         msg = 'get: ' + err.message; 
@@ -39,6 +56,7 @@ async function buscarUsuarios(cli){
 
 async function main() {
     const tests = [
+        obtenerToken,
         agregarUsuario,
         buscarUsuarios
     ];
@@ -46,7 +64,7 @@ async function main() {
     const ipDir = 'http://127.0.0.1'
     const app = new Servidor()
     app.setOnReady(async (actualPort) => {
-        const cli = new Cliente(ipDir, actualPort, 'usuarios')
+        const cli = new Cliente(ipDir, actualPort)
         
         let done = 0
         let passed = 0
