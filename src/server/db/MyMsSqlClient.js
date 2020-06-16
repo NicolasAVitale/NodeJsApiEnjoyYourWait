@@ -39,8 +39,7 @@ class MyMsSqlClient extends DbClient{
             return result.recordset
             
         } catch (err) {
-            // ... error checks
-            console.error(err);
+            throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
 
@@ -56,8 +55,8 @@ class MyMsSqlClient extends DbClient{
             return result
 
         } catch (err) {
-            // ... error checks
-            console.error(err);
+
+            throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
 
@@ -71,7 +70,7 @@ class MyMsSqlClient extends DbClient{
             return result
 
         } catch (err) {
-            console.error(err)
+            throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
 
@@ -85,7 +84,7 @@ class MyMsSqlClient extends DbClient{
             return result["recordset"][0]
 
         } catch (err) {
-            console.error(err)
+            throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
 
@@ -100,7 +99,7 @@ class MyMsSqlClient extends DbClient{
             return result
 
         } catch (err) {
-            console.error(err)
+            throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
 
@@ -117,7 +116,7 @@ class MyMsSqlClient extends DbClient{
             return result
 
         } catch (err) {
-            console.error(err)
+            throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
 
@@ -140,7 +139,7 @@ class MyMsSqlClient extends DbClient{
             return result
 
         } catch (err) {
-            console.error(err)
+            throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
 
@@ -154,7 +153,7 @@ class MyMsSqlClient extends DbClient{
             return result
 
         } catch (err) {
-            console.error(err)
+            throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
 
@@ -170,8 +169,27 @@ class MyMsSqlClient extends DbClient{
             return result
 
         } catch (err) {
-            // ... error checks
-            console.error(err);
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
+    async insertCliente(nuevo, tableName) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('dni', mssql.VarChar(50), nuevo.dni)
+                .input('nombre', mssql.VarChar(50), nuevo.nombre)
+                .input('apellido', mssql.VarChar(50), nuevo.apellido)
+                .input('email', mssql.VarChar(50), nuevo.email)
+                .input('fechaNacimiento', mssql.Date, nuevo.fechaNacimiento)
+                .input('activo', mssql.TinyInt, nuevo.activo)
+                .query(`insert into ${tableName} values (@dni,@nombre,@apellido,@email,@fechaNacimiento,@activo)`)
+
+            return result
+
+        } catch (err) {
+            throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
 }
