@@ -55,7 +55,7 @@ class ProductosDaoDb extends ProductosDao {
                 datosAcambiar.precio = precio.get('0').precio
             }
             if (datosAcambiar.nombre == undefined) {
-                datosAcambiar.ombre = await this.getCampoById('nombre', id)
+                datosAcambiar.nombre = await this.getCampoById('nombre', id)
                 const nombre = new Map(Object.entries(datosAcambiar.nombre))
                 datosAcambiar.nombre = nombre.get('0').nombre
             }
