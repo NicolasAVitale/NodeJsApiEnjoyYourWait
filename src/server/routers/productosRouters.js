@@ -36,7 +36,7 @@ function getProductosRouter(){
         try {
             await productosApi.eliminar(req.params.id)
             const mensaje = { "mensaje": "eliminado correctamante" }
-            res.status(204).send()
+            res.status(204).json(mensaje)
         } catch (err) {
             res.status(err.estado).json(err)
         }
@@ -49,7 +49,7 @@ function getProductosRouter(){
         try {
             await productosApi.actualizar(req.params.id, datos)
             const mensaje = { "mensaje": "editado correctamante" }
-            res.status(204).send()
+            res.status(200).json(mensaje)
         } catch (err) {
             res.status(err.estado).json(err)
         }
