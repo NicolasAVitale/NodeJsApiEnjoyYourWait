@@ -16,6 +16,7 @@ class Cliente {
     static validar(cliente) {
 
         const clienteSchema = Joi.object({
+            idCliente: Joi.number().integer(),
             dni: Joi.number().integer().min(1).max(99999999).required(),
             nombre: Joi.string().alphanum().min(1).max(150).required(),
             apellido: Joi.string().alphanum().min(1).max(150).required(),
