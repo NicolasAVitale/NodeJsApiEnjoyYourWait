@@ -8,6 +8,7 @@
     "start_nodemon": "nodemon -r dotenv/config src/main.js",
     "start": "node -r dotenv/config src/main.js",
     "startProd": "ENV=prod nodemon -r dotenv/config src/main.js",
+    "startDev": "ENV=dev nodemon -r dotenv/config src/main.js",
     "testProductos": "node -r dotenv/config test/testProductos.js",
     "testUsuarios": "node -r dotenv/config test/testUsuarios.js"
   },
