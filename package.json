@@ -9,8 +9,8 @@
     "start": "node -r dotenv/config src/main.js",
     "startProd": "ENV=prod nodemon -r dotenv/config src/main.js",
     "startDev": "ENV=dev nodemon -r dotenv/config src/main.js",
-    "testProductos": "node -r dotenv/config test/testProductos.js",
-    "testUsuarios": "node -r dotenv/config test/testUsuarios.js"
+    "testProductos": "ENV=dev node -r dotenv/config test/productos/testProductos.js",
+    "testUsuarios": "ENV=dev node -r dotenv/config test/usuarios/testUsuarios.js"
   },
   "author": "Jessica Vaks - Jonathan Sztajnhart - Micaela Schejner Aquino - Nicolás Vitale",
   "license": "ISC",
