@@ -52,7 +52,24 @@ class MyMsSqlClient extends DbClient{
                 .input('id', mssql.Int, id)
                 .query(`select ${selectFields} from ${tableName} where ${idName} = @id`)
 
-            return result
+            return result.recordset
+
+        } catch (err) {
+
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
+    async getByRol(selectFields, tableName, rol, idName) {
+
+        try {
+
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('rol', mssql.Int, rol)
+                .query(`select ${selectFields} from ${tableName} where idRol = @rol`)
+
+            return result.recordset
 
         } catch (err) {
 

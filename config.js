@@ -1,4 +1,4 @@
-// const currentEnv = process.env.ENV || 'prod'
+//const currentEnv = process.env.ENV || 'prod'
 const currentEnv = process.env.ENV || 'dev'
 
 const envs = {

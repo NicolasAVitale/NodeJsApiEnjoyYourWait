@@ -16,6 +16,9 @@ class UsuariosApi {
         } else if (queryParams.has('id')) {
             const id = parseInt(queryParams.get('id'))
             usuarios = await this.usuariosDao.getById(id)
+        } else if (queryParams.has('rol')) {
+            const rol = parseInt(queryParams.get('rol'))
+            usuarios = await this.usuariosDao.getByRol(rol)
         } else {
             throw new CustomError(400, 'parametros de consulta invalidos', queryParams)
         }

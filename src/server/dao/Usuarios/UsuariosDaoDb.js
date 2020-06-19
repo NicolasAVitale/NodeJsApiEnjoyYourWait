@@ -32,6 +32,15 @@ class UsuariosDaoDb extends UsuariosDao {
         }
     }
 
+    async getByRol(rol) {
+        try {
+            const usuarios = await this.client.getByRol('*', this.tabla, rol , this.idName)
+            return usuarios
+        } catch (err) {
+            throw new CustomError(500, 'error al obtener todos los usuarios', err)
+        }
+    }
+
     async add(usuarioNuevo) {
         try {
             const usuario = await this.client.insertUsuario(usuarioNuevo,this.tabla)

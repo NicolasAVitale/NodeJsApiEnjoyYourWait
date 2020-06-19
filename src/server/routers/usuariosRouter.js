@@ -16,14 +16,12 @@ function getUsuariosRouter() {
         try {
             const queryParams = new Map(Object.entries(req.query))
             const usuarios = await usuariosApi.buscar(queryParams)
-
-            const respuesta = { "usuarios": usuarios, "cantidad": usuarios.length }
-            res.status(200).json(respuesta)
+            
+            res.status(200).json(usuarios)
         } catch (err) {
             res.status(400).json(err)
         }
     })
-
 
     router.post('/', jwtMdw.ensureAuthenticated, async (req, res) => {
 

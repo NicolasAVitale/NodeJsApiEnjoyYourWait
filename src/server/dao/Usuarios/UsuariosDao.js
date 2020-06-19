@@ -14,6 +14,10 @@ class UsuariosDao {
         throw new CustomError(500, 'falta implementar getByDni!')
     }
 
+    async getByRol(rol) {
+        throw new CustomError(500, 'falta implementar getByRol!')
+    }
+
     async deleteById(id) {
         throw new CustomError(500, 'falta implementar deleteById!')
     }
