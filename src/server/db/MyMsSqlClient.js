@@ -137,6 +137,23 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
+    async insertPromo(nuevo, tableName) {
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('descripcion', mssql.VarChar, nuevo.descripcion)
+                .input('fechaInicio', mssql.Date, nuevo.fechaInicio)
+                .input('fechaBaja', mssql.Date, nuevo.fechaBaja)                
+                .input('esPremio', mssql.Int, nuevo.esPremio)
+                .query(`insert into ${tableName} (descripcion,fechaInicio,fechaBaja,esPremio) values (@descripcion,@fechaInicio,@fechaBaja,@esPremio)`)
+
+            return result
+
+        } catch (err) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
     async insertUsuario(nuevo, tableName) {
 
         try {
