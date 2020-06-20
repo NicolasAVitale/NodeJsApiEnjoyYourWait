@@ -105,7 +105,6 @@ async function actualizarUsuario(cli){
     let msg = 'put: ok';
     try{
         await cli.actualizarUsuario('2',{
-            dni: 12345679,
             email: 'antonio.banderas@hotmail.com'
         }, token)
     } catch (err) {
