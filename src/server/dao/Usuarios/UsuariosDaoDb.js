@@ -65,18 +65,18 @@ class UsuariosDaoDb extends UsuariosDao {
         let result
         try {
 
-            if (datosAcambiar.Email == undefined) {
-                datosAcambiar.Email = await this.getCampoById('Email', id)
-                const Email = new Map(Object.entries(datosAcambiar.Email))
-                datosAcambiar.Email = Email.get('0').Email
+            if (datosAcambiar.email == undefined) {
+                datosAcambiar.email = await this.getCampoById('email', id)
+                const email = new Map(Object.entries(datosAcambiar.email))
+                datosAcambiar.email = email.get('0').Email
             }
-            if (datosAcambiar.Dni == undefined) {
-                datosAcambiar.Dni = await this.getCampoById('Dni', id)
-                const dni = new Map(Object.entries(datosAcambiar.Dni))
-                datosAcambiar.Dni = dni.get('0').Dni
+            if (datosAcambiar.dni == undefined) {
+                datosAcambiar.dni = await this.getCampoById('dni', id)
+                const dni = new Map(Object.entries(datosAcambiar.dni))
+                datosAcambiar.dni = dni.get('0').dni
             }
 
-            const datos = `dni = '${datosAcambiar.Dni}',  email = '${datosAcambiar.Email}'`
+            const datos = `dni = '${datosAcambiar.dni}',  email = '${datosAcambiar.email}'`
             result = await this.client.updateById(id, this.idName, this.tabla, datos)
         } catch (error) {
             throw new CustomError(500, `error al editar el usuario`, error)

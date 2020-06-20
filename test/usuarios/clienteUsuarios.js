@@ -10,7 +10,7 @@ class Cliente {
     async obtenerToken(datosAutenticacion) {
         const postOpt = {
             method: 'POST',
-            uri: this.serverUrl + '/login',
+            uri: this.serverUrl + '/auth',
             json: true
         }
         if (datosAutenticacion) {
@@ -48,6 +48,32 @@ class Cliente {
             }
         })
         return usuarios
+    }
+
+    async buscarUsuariosPorIdORol(params, token) {
+        const usuario = await request({
+            method: 'GET',
+            uri: this.serverUrl,
+            qs: params,
+            json: true,
+            auth:{
+                "bearer": token
+            }
+        })
+        return usuario
+    }
+    
+    async actualizarUsuario(id, datos, token) {
+        const usuario = await request({
+            method: 'PUT',
+            uri: this.serverUrl + '/' + id,
+            body: datos,
+            json: true,
+            auth:{
+                "bearer": token
+            }
+        })
+        return usuario
     }
 }
 
