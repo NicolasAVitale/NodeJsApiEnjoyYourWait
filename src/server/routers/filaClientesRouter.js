@@ -12,7 +12,18 @@ function getFilaClientesRouter(){
         
         try {
             const queryParams = new Map(Object.entries(req.params))
-            const tiempoEstimado =  await filaClientesApi.calcularTiempoEstimado(queryParams)
+            const tiempoEstimado =  await filaClientesApi.calcularTiempoYPersonasPorCliente(queryParams)
+            res.status(200).json(tiempoEstimado)
+        } catch (err) {
+            res.status(400).json(err)
+        }
+    })
+
+    router.get('/:capacidad/:tiempo', jwtMdw.ensureAuthenticated, async (req, res) => {
+        
+        try {
+            const queryParams = new Map(Object.entries(req.params))
+            const tiempoEstimado =  await filaClientesApi.calcularTiempoYPersonasGeneral(queryParams)
             res.status(200).json(tiempoEstimado)
         } catch (err) {
             res.status(400).json(err)
