@@ -64,6 +64,14 @@ class UsuariosApi {
             throw new CustomError(400, 'No se encontraron datos', error)
         }
     }
+
+    async login(login) {
+        try {
+            return await this.usuariosDao.login(login)
+        } catch (error) {
+            throw new CustomError(400, 'No se encontraron datos', error)
+        }
+    }
 }
 
 

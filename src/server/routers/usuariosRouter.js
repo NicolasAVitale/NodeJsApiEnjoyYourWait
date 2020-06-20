@@ -88,6 +88,18 @@ function getUsuariosRouter() {
 
     })
 
+    router.post('/login', jwtMdw.ensureAuthenticated, async (req, res) => {
+
+        const datos = req.body
+        try {
+            const usuarioLogin = await usuariosApi.login(datos)
+            res.status(200).json(usuarioLogin)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     return router;
 }
 

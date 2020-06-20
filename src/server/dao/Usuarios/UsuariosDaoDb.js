@@ -10,6 +10,7 @@ class UsuariosDaoDb extends UsuariosDao {
         this.client = DbClientFactory.getDbClient()
         this.tabla = 'dbo.Usuarios'
         this.idName = 'idUsuario'
+        this.emailName = 'email'
         this.nombreName = 'nombre'
         this.passName = 'contrasena'
     }
@@ -100,6 +101,15 @@ class UsuariosDaoDb extends UsuariosDao {
             return usuarios
         } catch (err) {
             throw new CustomError(500, 'error al obtener todos los usuarios', err)
+        }
+    }
+
+    async login(login) {
+        try {
+            const usuario = await this.client.login('*', this.tabla,login.email, login.contrasena, this.emailName, this.passName)
+            return usuario
+        } catch (err) {
+            throw new CustomError(500, 'error al loguear', err)
         }
     }
 
