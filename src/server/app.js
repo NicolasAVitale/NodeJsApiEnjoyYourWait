@@ -4,7 +4,7 @@ import { getProductosRouter } from './routers/productosRouters.js';
 import { getUsuariosRouter } from './routers/usuariosRouter.js'
 import { getFilaClientesRouter } from './routers/filaClientesRouter.js'
 import { getClientesRouter } from './routers/clientesRouter.js'
-import { getPromocionesRouter } from './routers/promocionesRouter.js'
+import { getPromocionesRouter } from './routers/promocionesRouters.js'
 import passport from 'passport'
 import  MyPassport from "./passport.js";
 
