@@ -13,9 +13,6 @@ class FilaClientesDaoDb extends FilaClientesDao {
 
     async calculateTimeAndPeopleById(id, capacidad, tiempo) {
         try {
-            console.log(id)
-            console.log(capacidad)
-            console.log(tiempo)
             const tiempoPersonasCliente = await this.client.calculateTimeAndPeopleById(id, capacidad, tiempo)
             return tiempoPersonasCliente
         } catch (err) {
@@ -25,8 +22,6 @@ class FilaClientesDaoDb extends FilaClientesDao {
 
     async calculateGeneralTimeAndPeople(capacidad, tiempo) {
         try {
-            console.log(capacidad)
-            console.log(tiempo)
             const tiempoPersonasGeneral = await this.client.calculateGeneralTimeAndPeople(capacidad, tiempo)
             return tiempoPersonasGeneral
         } catch (err) {
