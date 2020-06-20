@@ -91,10 +91,10 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
-    async calculateTimeById(id, capacidad, tiempo) {
+    async calculateTimeAndPeopleById(id, capacidad, tiempo) {
         try {
             let pool = await this.connect()
-            let query = "exec spCalcularTiempoEspera @idCliente=" + id + ", @capacidadMax=" + capacidad + ", @tiempoEstimado=" + tiempo + ";";
+            let query = "exec spCalcularTiempoYPersonasCliente @idCliente=" + id + ", @capacidadMax=" + capacidad + ", @tiempoEstimado=" + tiempo + ";";
             let result = await pool.request()
                 .query(query)
 
@@ -105,6 +105,20 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
+    async calculateGeneralTimeAndPeople(capacidad, tiempo) {
+        try {
+            let pool = await this.connect()
+            let query = "exec spCalcularTiempoYPersonasGeneral @capacidadMax=" + capacidad + ", @tiempoEstimado=" + tiempo + ";";
+            let result = await pool.request()
+                .query(query)
+
+
+            console.log(result["recordset"][0])
+            return result["recordset"][0]
+        } catch (err) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
     
     async updateRestaurantClientState(tiempo) {
         try {
