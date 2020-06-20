@@ -59,7 +59,7 @@ function getUsuariosRouter() {
 
     })
 
-    router.post('/login', async (req, res) => {
+    router.post('/auth', async (req, res) => {
 
         try {
             await passport.authenticate("local", { session: false }, async (error, user) => {
