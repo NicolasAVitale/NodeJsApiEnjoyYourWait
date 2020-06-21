@@ -166,6 +166,19 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
+    async insertProdEnProdPromo(idProducto, idPromocion, tablename) {
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('idProducto', mssql.Int, nuevo.idProducto)
+                .input('idPromocion', mssql.Int, nuevo.idPromocion)
+                .query(`insert into ${tableName} (idProducto, idPromocion) values (@idProducto,@idPromocion)`)
+            return result            
+        } catch (error) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
     async insertUsuario(nuevo, tableName) {
 
         try {
