@@ -41,6 +41,16 @@ class PromocionesDaoDb extends PromocionesDao {
         
     }
 
+    async addProdEnPromo(idProducto, idPromocion) {
+        try {
+            /*Ver en donde se puede guardar el nombre de la tabla de promocionproducto*/
+            const prodPromo = await this.client.insertProdEnProdPromo(idProducto, idPromocion, 'PromocionProducto')
+            return 'Producto asociado a la promocion exitosamente'
+        } catch (error) {
+            throw new CustomError(500, 'Error al asociar un producto con una promocion', err)
+        }
+    }
+
     async updateById(id, datosAcambiar) {
         let result
         try {
@@ -137,6 +147,40 @@ class PromocionesDaoDb extends PromocionesDao {
 
         if (result.rowsAffected == 0) {
             throw new CustomError(404, 'No existe una promocion para desactivar con id: ${id}', { id })
+        }else{
+            return result
+        }
+
+    }
+
+    async enablePremio(id) {
+        let result
+        try {
+            const datos = 'esPremio = 1'
+            result = await this.client.updateById(id, this.idName, this.tabla, datos)
+        } catch (err) {
+            throw new CustomError(500, 'Error al marcar la promocion como premio', err)
+        }
+
+        if (result.rowsAffected == 0) {
+            throw new CustomError(404, 'No existe una promocion para marcar como premio con id: ${id}', { id })
+        }else{
+            return result
+        }
+
+    }
+
+    async disablePremio(id) {
+        let result
+        try {
+            const datos = 'esPremio = 0'
+            result = await this.client.updateById(id, this.idName, this.tabla, datos)
+        } catch (err) {
+            throw new CustomError(500, 'Error al desmarcar la promocion como premio', err)
+        }
+
+        if (result.rowsAffected == 0) {
+            throw new CustomError(404, 'No existe una promocion para desmarcar como premio con id: ${id}', { id })
         }else{
             return result
         }

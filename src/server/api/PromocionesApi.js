@@ -1,6 +1,7 @@
 import Promocion from '../models/Promocion.js'
 import PromocionesDaoFactory from '../dao/Promociones/PromocionesDaoFactory.js'
 import CustomError from '../errores/CustomError.js'
+import Producto from '../models/Producto.js'
 
 class PromocionesApi {
 
@@ -42,11 +43,36 @@ class PromocionesApi {
         await this.promocionesDao.disable(id)
     }
 
+    async esPremio(id) {
+        await this.promocionesDao.enablePremio(id)
+    }
+
+    async noEsPremio(id) {
+        await this.promocionesDao.disablePremio(id)
+    }
+
+    /*Asocia un producto a una promocion*/
+    async agregarProductoApromocion(producto, promocion) {
+        PromocionesApi.esPromocionValida(promocion)
+        PromocionesApi.esProductoValido(producto)
+        const prodPromoAsociados = await this.promocionesDao.addProdEnPromo(producto.id, promocion.id)
+        return prodPromoAsociados
+    }
+
+
     static esPromocionValida(promocion) {
         try {
             Promocion.validar(promocion)
         } catch (error) {
-            throw new CustomError(400, 'La promocion que quiere ingresar es invalida', error)
+            throw new CustomError(400, 'La promocion es invalida', error)
+        }
+    }
+
+    static esProductoValido(producto) {
+        try {
+            Producto.validar(producto)
+        } catch (error) {
+            throw new CustomError(400, 'El producto es invalido', error)
         }
     }
 }

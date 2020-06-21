@@ -34,6 +34,10 @@ class UsuariosDao {
         throw new CustomError(500, 'falta implementar getByNameAndPass!')
     }
 
+    async login(login) {
+        throw new CustomError(500, 'falta implementar login!')
+    }
+
 }
 
 export default UsuariosDao

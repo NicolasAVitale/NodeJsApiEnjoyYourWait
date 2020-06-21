@@ -11,7 +11,7 @@ class Cliente {
     async obtenerToken(datosAutenticacion) {
         const postOpt = {
             method: 'POST',
-            uri:  `${this.ipDir}:${this.puerto}/api/usuarios/login`,
+            uri:  `${this.ipDir}:${this.puerto}/api/usuarios/auth`,
             json: true
         }
         if (datosAutenticacion) {

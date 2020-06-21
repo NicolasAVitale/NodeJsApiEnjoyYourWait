@@ -36,6 +36,24 @@ async function agregarProducto(cli){
     return { testFailed, msg }
 }
 
+async function agregarProductoConBadRequest(cli){
+    let testFailed = false;
+    let msg = 'post with body: ok';
+    try{
+        await cli.agregarProducto({
+            nombre: 'Papas fritas',
+            precio: 'precio',
+            idTipo: 1,
+            imagen: 'papas_fritas.jpg',
+            activo: 1
+        }, token)
+    } catch (err) {
+        testFailed = true;
+        msg = 'post with body: ' + err.message; 
+    }
+    return { testFailed, msg }
+}
+
 async function buscarProductos(cli){
     let testFailed = false;
     let msg = 'get: ok';
@@ -64,12 +82,11 @@ async function actualizarProducto(cli){
     let testFailed = false;
     let msg = 'put: ok';
     try{
-        let producto = await cli.buscarProductoPorId({id: '1'}, token)
-        
         await cli.actualizarProducto('1',{
             nombre: 'tira de asado',
             precio: '220.10',
-            imagen: 'tira_de_asado.jpg'
+            imagen: 'tira_de_asado.jpg',
+            activo: 1
         }, token)
     } catch (err) {
         testFailed = true;
@@ -106,6 +123,7 @@ async function main() {
     const tests = [
         obtenerToken,
         agregarProducto,
+        agregarProductoConBadRequest,
         buscarProductos,
         buscarProductoPorId,
         actualizarProducto,

@@ -112,8 +112,6 @@ class MyMsSqlClient extends DbClient{
             let result = await pool.request()
                 .query(query)
 
-
-            console.log(result["recordset"][0])
             return result["recordset"][0]
         } catch (err) {
             throw new CustomError(500, 'error en consulta SQL', err)
@@ -168,6 +166,19 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
+    async insertProdEnProdPromo(idProducto, idPromocion, tablename) {
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('idProducto', mssql.Int, nuevo.idProducto)
+                .input('idPromocion', mssql.Int, nuevo.idPromocion)
+                .query(`insert into ${tableName} (idProducto, idPromocion) values (@idProducto,@idPromocion)`)
+            return result            
+        } catch (error) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
     async insertUsuario(nuevo, tableName) {
 
         try {
@@ -215,6 +226,22 @@ class MyMsSqlClient extends DbClient{
                 .query(`select ${selectFields} from ${tableName} where ${nameName} = '${name}' and ${passName} = '${pass}'`)
 
             return result
+
+        } catch (err) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
+    async login(selectFields, tableName, email, pass, emailName, passName) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('email', mssql.VarChar(70), email)
+                .input('contrasena', mssql.VarChar(50), pass)
+                .query(`select ${selectFields} from ${tableName} where ${emailName} = '${email}' and ${passName} = '${pass}'`)
+
+                return result["recordset"][0]
 
         } catch (err) {
             throw new CustomError(500, 'error en consulta SQL', err)

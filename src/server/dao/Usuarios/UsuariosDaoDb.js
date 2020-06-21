@@ -10,6 +10,7 @@ class UsuariosDaoDb extends UsuariosDao {
         this.client = DbClientFactory.getDbClient()
         this.tabla = 'dbo.Usuarios'
         this.idName = 'idUsuario'
+        this.emailName = 'email'
         this.nombreName = 'nombre'
         this.passName = 'contrasena'
     }
@@ -65,18 +66,13 @@ class UsuariosDaoDb extends UsuariosDao {
         let result
         try {
 
-            if (datosAcambiar.Email == undefined) {
-                datosAcambiar.Email = await this.getCampoById('Email', id)
-                const Email = new Map(Object.entries(datosAcambiar.Email))
-                datosAcambiar.Email = Email.get('0').Email
-            }
-            if (datosAcambiar.Dni == undefined) {
-                datosAcambiar.Dni = await this.getCampoById('Dni', id)
-                const dni = new Map(Object.entries(datosAcambiar.Dni))
-                datosAcambiar.Dni = dni.get('0').Dni
+            if (datosAcambiar.email == undefined) {
+                datosAcambiar.email = await this.getCampoById('email', id)
+                const email = new Map(Object.entries(datosAcambiar.email))
+                datosAcambiar.email = email.get('0').email
             }
 
-            const datos = `dni = '${datosAcambiar.Dni}',  email = '${datosAcambiar.Email}'`
+            const datos = `email = '${datosAcambiar.email}'`
             result = await this.client.updateById(id, this.idName, this.tabla, datos)
         } catch (error) {
             throw new CustomError(500, `error al editar el usuario`, error)
@@ -105,6 +101,15 @@ class UsuariosDaoDb extends UsuariosDao {
             return usuarios
         } catch (err) {
             throw new CustomError(500, 'error al obtener todos los usuarios', err)
+        }
+    }
+
+    async login(login) {
+        try {
+            const usuario = await this.client.login('*', this.tabla,login.email, login.contrasena, this.emailName, this.passName)
+            return usuario
+        } catch (err) {
+            throw new CustomError(500, 'error al loguear', err)
         }
     }
 
