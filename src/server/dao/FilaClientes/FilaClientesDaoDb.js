@@ -38,6 +38,60 @@ class FilaClientesDaoDb extends FilaClientesDao {
             throw new CustomError(500, 'error al actualizar el estado de los clientes dentro del restaurante', err)
         }
     }
+
+    async addClient(queueClient) {
+        let result
+        try {
+            result = await this.client.insertClientToQueue(queueClient,this.tabla)
+            return result
+        } catch (err) {
+            throw new CustomError(500, 'error al ingresar cliente a la fila', err)
+        }
+    }
+
+    async updateClient(idCliente, datosAcambiar) {
+        let result       
+
+        try {
+            if (datosAcambiar.cantComensales == undefined) {
+                datosAcambiar.cantComensales = await this.getCampoByPK('cantComensales', idCliente,datosAcambiar.fechaIngFila)
+                const cantComensales = new Map(Object.entries(datosAcambiar.cantComensales))
+                datosAcambiar.cantComensales = cantComensales.get('0').cantComensales
+            }
+            if (datosAcambiar.fechaEgrFila == undefined) {
+                datosAcambiar.fechaEgrFila = await this.getCampoByPK('fechaEgrFila', idCliente,datosAcambiar.fechaIngFila)
+                const fechaEgrFila = new Map(Object.entries(datosAcambiar.fechaEgrFila))
+                datosAcambiar.fechaEgrFila = fechaEgrFila.get('0').fechaEgrFila
+                    
+            }
+            if (datosAcambiar.esConfirmado == undefined) {
+                datosAcambiar.esConfirmado = await this.getCampoByPK('esConfirmado', idCliente,datosAcambiar.fechaIngFila)
+                const esConfirmado = new Map(Object.entries(datosAcambiar.esConfirmado))
+                datosAcambiar.esConfirmado = esConfirmado.get('0').esConfirmado
+            }
+            if (datosAcambiar.activo == undefined) {
+                datosAcambiar.activo = await this.getCampoByPK('activo', idCliente,datosAcambiar.fechaIngFila)
+                const activo = new Map(Object.entries(datosAcambiar.activo))
+                datosAcambiar.activo = activo.get('0').activo
+            }
+
+            const datos = `cantComensales = ${datosAcambiar.cantComensales}, fechaEgrFila = '${datosAcambiar.fechaEgrFila}', esConfirmado = ${datosAcambiar.esConfirmado}, activo = ${datosAcambiar.activo}`
+            result = await this.client.updateClientQueue(idCliente, datosAcambiar.fechaIngFila, datos)
+            return result
+        } catch (err) {
+            throw new CustomError(500, 'error al editar cliente a la fila', err)
+        }
+    }
+
+    async getCampoByPK(data, idCliente,fechaIng) {
+
+        try {
+            const campoGet = await this.client.getByPK(data, this.tabla, idCliente, fechaIng + '.000')
+            return campoGet
+        } catch (err) {
+            throw new CustomError(500, 'error al obtener el campo', err)
+        }
+    }
 }
 
 

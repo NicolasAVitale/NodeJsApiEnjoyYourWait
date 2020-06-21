@@ -40,6 +40,19 @@ class FilaClientesApi {
         
         return estadoActualizado
     }
+
+
+    async agregarClienteAFila(clienteFila) {
+        let clienteFilaAgregado
+        clienteFilaAgregado = await this.filaClientesDao.addClient(clienteFila)
+        return clienteFilaAgregado
+    }
+
+    async editarClienteFila(idCliente,clienteFila) {
+        let clienteFilaActualizado
+        clienteFilaActualizado = await this.filaClientesDao.updateClient(idCliente,clienteFila)
+        return clienteFilaActualizado
+    }
 }
 
 

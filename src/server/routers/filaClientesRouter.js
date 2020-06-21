@@ -41,6 +41,28 @@ function getFilaClientesRouter(){
 
     })
 
+    router.post('/agregarCliente',  async (req, res) => {
+        try {
+            await filaClientesApi.agregarClienteAFila(req.body)
+            const mensaje = { "mensaje": "agregado correctamante" }
+            res.status(200).json(mensaje)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
+    router.put('/editarCliente/:idCliente', async (req, res) => {
+        try {
+            await filaClientesApi.editarClienteFila(req.params.idCliente,req.body)
+            const mensaje = { "mensaje": "editado correctamante" }
+            res.status(204).json(mensaje)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     return router;
 }
 

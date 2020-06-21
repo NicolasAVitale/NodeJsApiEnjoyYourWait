@@ -240,6 +240,53 @@ class MyMsSqlClient extends DbClient{
             throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
+
+
+    async insertClientToQueue(nuevo,tableName) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('idCliente', mssql.Int, nuevo.idCliente)
+                .input('cantComensales', mssql.VarChar(50), nuevo.cantComensales)
+                .input('fechaIngFila', mssql.DateTime, nuevo.fechaIngFila)
+                .input('esConfirmado', mssql.TinyInt, nuevo.esConfirmado)
+                .input('activo', mssql.TinyInt, nuevo.activo)
+                .query(`insert into ${tableName} (idCliente,cantComensales,fechaIngFila,fechaEgrFila,esConfirmado,activo) values (@idCliente,@cantComensales,@fechaIngFila,NULL,@esConfirmado,@activo)`)
+
+            return result
+
+        } catch (err) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
+    async updateClientQueue(idClient,fechaIngFila, datos) {
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .query(`update FilaCliente SET ${datos} where idCliente = ${idClient} and fechaIngFila = '${fechaIngFila}'`)
+            return result
+
+        } catch (err) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
+    async getByPK(selectFields, tableName, idCliente, fechaIngFila) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .query(`select ${selectFields} from ${tableName} where idCliente = ${idCliente} and fechaIngFila = '${fechaIngFila}'`)
+            return result.recordset
+
+        } catch (err) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
+    
 }
 
 export default MyMsSqlClient
