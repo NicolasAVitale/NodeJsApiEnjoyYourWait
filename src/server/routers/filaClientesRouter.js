@@ -41,7 +41,7 @@ function getFilaClientesRouter(){
 
     })
 
-    router.post('/agregarCliente',  async (req, res) => {
+    router.post('/agregarCliente', jwtMdw.ensureAuthenticated,  async (req, res) => {
         try {
             await filaClientesApi.agregarClienteAFila(req.body)
             const mensaje = { "mensaje": "agregado correctamante" }
@@ -52,7 +52,7 @@ function getFilaClientesRouter(){
 
     })
 
-    router.put('/editarCliente/:idCliente', async (req, res) => {
+    router.put('/editarCliente/:idCliente', jwtMdw.ensureAuthenticated, async (req, res) => {
         try {
             await filaClientesApi.editarClienteFila(req.params.idCliente,req.body)
             const mensaje = { "mensaje": "editado correctamante" }
