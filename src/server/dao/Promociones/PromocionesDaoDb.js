@@ -1,6 +1,7 @@
 import PromocionesDao from './PromocionesDao.js'
 import CustomError from '../../errores/CustomError.js'
 import DbClientFactory from '../../db/DbClientFactory.js'
+import moment from 'moment'
 
 class PromocionesDaoDb extends PromocionesDao {
 
@@ -52,7 +53,7 @@ class PromocionesDaoDb extends PromocionesDao {
     }
 
     async updateById(id, datosAcambiar) {
-        let result
+        let result        
         try {
             
             if (datosAcambiar.descripcion == undefined) {
@@ -63,12 +64,12 @@ class PromocionesDaoDb extends PromocionesDao {
             if (datosAcambiar.fechaInicio == undefined) {
                 datosAcambiar.fechaInicio = await this.getCampoById('fechaInicio', id)
                 const fechaInicio = new Map(Object.entries(datosAcambiar.fechaInicio))
-                datosAcambiar.fechaInicio = fechaInicio.get('0').fechaInicio
+                datosAcambiar.fechaInicio = moment(fechaInicio.get('0').fechaInicio).format('YYYY-MM-DD HH:mm:ss')
             }
             if (datosAcambiar.fechaBaja == undefined) {
                 datosAcambiar.fechaBaja = await this.getCampoById('fechaBaja', id)
                 const fechaBaja = new Map(Object.entries(datosAcambiar.fechaBaja))
-                datosAcambiar.fechaBaja = fechaBaja.get('0').fechaBaja
+                datosAcambiar.fechaBaja = moment(fechaBaja.get('0').fechaBaja).format('YYYY-MM-DD HH:mm:ss')
             }
             if (datosAcambiar.esPremio == undefined) {
                 datosAcambiar.esPremio = await this.getCampoById('esPremio', id)
@@ -97,7 +98,7 @@ class PromocionesDaoDb extends PromocionesDao {
     async getCampoById(data,id){
         try {
             const campoGet = await this.client.getByID(data, this.tabla, id, this.idName)
-            return campoGet.recordset
+            return campoGet
         } catch (err) {
             throw new CustomError(500, 'Error al obtener el campo', err)
         }
