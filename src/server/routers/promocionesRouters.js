@@ -62,7 +62,7 @@ function getPromocionesRouter(){
         try {
             await promocionesApi.activar(req.params.id, datos)
             const mensaje = { "mensaje": "Activado correctamante" }
-            res.status(204).send()
+            res.status(200).json(mensaje)
         } catch (err) {
             res.status(err.estado).json(err)
         }
@@ -75,7 +75,7 @@ function getPromocionesRouter(){
         try {
             await promocionesApi.desactivar(req.params.id, datos)
             const mensaje = { "mensaje": "Desactivado correctamante" }
-            res.status(204).send()
+            res.status(200).json(mensaje)
         } catch (err) {
             res.status(err.estado).json(err)
         }

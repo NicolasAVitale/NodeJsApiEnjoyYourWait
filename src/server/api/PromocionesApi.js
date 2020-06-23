@@ -54,7 +54,6 @@ class PromocionesApi {
     /*Asocia un producto a una promocion*/
     async agregarProductoApromocion(producto, promocion) {
         PromocionesApi.esPromocionValida(promocion)
-        PromocionesApi.esProductoValido(producto)
         const prodPromoAsociados = await this.promocionesDao.addProdEnPromo(producto.id, promocion.id)
         return prodPromoAsociados
     }
@@ -68,13 +67,6 @@ class PromocionesApi {
         }
     }
 
-    static esProductoValido(producto) {
-        try {
-            Producto.validar(producto)
-        } catch (error) {
-            throw new CustomError(400, 'El producto es invalido', error)
-        }
-    }
 }
 
 

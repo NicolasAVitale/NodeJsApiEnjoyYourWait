@@ -1,4 +1,6 @@
-import Joi from '@hapi/joi';
+import JoiBase from "@hapi/joi"
+import JoiDate from "@hapi/joi-date"
+const Joi = JoiBase.extend(JoiDate) // extend Joi with Joi Date
 
 class Promocion{
     
