@@ -52,11 +52,11 @@ function getFilaClientesRouter(){
 
     })
 
-    router.put('/editarCliente/:idCliente', jwtMdw.ensureAuthenticated, async (req, res) => {
+    router.put('/sacarCliente/:idCliente', jwtMdw.ensureAuthenticated, async (req, res) => {
         try {
-            await filaClientesApi.editarClienteFila(req.params.idCliente,req.body)
-            const mensaje = { "mensaje": "editado correctamante" }
-            res.status(204).json(mensaje)
+            await filaClientesApi.sacarClienteFila(req.params.idCliente)
+            const mensaje = { "mensaje": "Salió de fila correctamante" }
+            res.status(200).json(mensaje)
         } catch (err) {
             res.status(err.estado).json(err)
         }

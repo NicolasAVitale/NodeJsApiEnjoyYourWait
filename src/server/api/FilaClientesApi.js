@@ -48,9 +48,9 @@ class FilaClientesApi {
         return clienteFilaAgregado
     }
 
-    async editarClienteFila(idCliente,clienteFila) {
+    async sacarClienteFila(idCliente) {
         let clienteFilaActualizado
-        clienteFilaActualizado = await this.filaClientesDao.updateClient(idCliente,clienteFila)
+        clienteFilaActualizado = await this.filaClientesDao.removeClient(idCliente)
         return clienteFilaActualizado
     }
 }

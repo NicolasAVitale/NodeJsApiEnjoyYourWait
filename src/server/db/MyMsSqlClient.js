@@ -288,31 +288,17 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
-    async updateClientQueue(idClient,fechaIngFila, datos) {
+    async removeClientToQueue(idClient) {
         try {
             let pool = await this.connect()
             let result = await pool.request()
-                .query(`update FilaCliente SET ${datos} where idCliente = ${idClient} and fechaIngFila = '${fechaIngFila}'`)
+                .query(`update FilaCliente SET fechaEgrFila = GETDATE(), activo = 0 where idCliente = ${idClient} and activo = 1`)
             return result
 
         } catch (err) {
             throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
-
-    async getByPK(selectFields, tableName, idCliente, fechaIngFila) {
-
-        try {
-            let pool = await this.connect()
-            let result = await pool.request()
-                .query(`select ${selectFields} from ${tableName} where idCliente = ${idCliente} and fechaIngFila = '${fechaIngFila}'`)
-            return result.recordset
-
-        } catch (err) {
-            throw new CustomError(500, 'error en consulta SQL', err)
-        }
-    }
-
     
 }
 
