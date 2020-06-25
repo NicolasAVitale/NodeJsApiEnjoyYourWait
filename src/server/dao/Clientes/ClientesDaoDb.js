@@ -34,15 +34,14 @@ class ClientesDaoDb extends ClientesDao {
     async add(clienteNuevo) {
         try {
             const existe = await this.getByDni(clienteNuevo.dni)
-
-            if (existe.rowsAffected == 0){
+            if (existe.length == 0){
                 const cliente = await this.client.insertCliente(clienteNuevo,this.tabla)
                 const id = await this.getByDni(clienteNuevo.dni)
-                clienteNuevo.idCliente = id.recordset[0].idCliente
+                clienteNuevo.idCliente = id[0].idCliente
                 return clienteNuevo
             }else{
-                const cliente = await this.updateById(existe.recordset[0].idCliente,clienteNuevo)
-                clienteNuevo.idCliente = existe.recordset[0].idCliente
+                const cliente = await this.updateById(existe[0].idCliente,clienteNuevo)
+                clienteNuevo.idCliente = existe[0].idCliente
                 return clienteNuevo
             }
             
