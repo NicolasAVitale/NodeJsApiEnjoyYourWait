@@ -53,8 +53,7 @@ class PromocionesApi {
 
     /*Asocia un producto a una promocion*/
     async agregarProductoApromocion(producto, promocion) {
-        PromocionesApi.esPromocionValida(promocion)
-        const prodPromoAsociados = await this.promocionesDao.addProdEnPromo(producto.id, promocion.id)
+        const prodPromoAsociados = await this.promocionesDao.addProdEnPromo(producto, promocion)
         return prodPromoAsociados
     }
 

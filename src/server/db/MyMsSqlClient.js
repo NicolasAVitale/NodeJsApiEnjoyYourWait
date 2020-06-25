@@ -166,12 +166,12 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
-    async insertProdEnProdPromo(idProducto, idPromocion, tablename) {
+    async insertProdEnProdPromo(idProducto, idPromocion, tableName) {
         try {
             let pool = await this.connect()
             let result = await pool.request()
-                .input('idProducto', mssql.Int, nuevo.idProducto)
-                .input('idPromocion', mssql.Int, nuevo.idPromocion)
+                .input('idProducto', mssql.Int, idProducto)
+                .input('idPromocion', mssql.Int, idPromocion)
                 .query(`insert into ${tableName} (idProducto, idPromocion) values (@idProducto,@idPromocion)`)
             return result            
         } catch (error) {

@@ -11,6 +11,7 @@ class PromocionesDaoDb extends PromocionesDao {
         this.client = DbClientFactory.getDbClient()
         this.tabla = 'dbo.Promociones'
         this.idName = 'idPromocion'
+        this.tablaPromoProducto = 'dbo.PromocionProducto'
     }
 
      async getAll() {
@@ -33,7 +34,6 @@ class PromocionesDaoDb extends PromocionesDao {
     
     async add(promoNueva) {
         try {
-          
             const promocion = await this.client.insertPromo(promoNueva,this.tabla)
             return promoNueva
         } catch (err) {
@@ -44,9 +44,8 @@ class PromocionesDaoDb extends PromocionesDao {
 
     async addProdEnPromo(idProducto, idPromocion) {
         try {
-            /*Ver en donde se puede guardar el nombre de la tabla de promocionproducto*/
-            const prodPromo = await this.client.insertProdEnProdPromo(idProducto, idPromocion, 'PromocionProducto')
-            return 'Producto asociado a la promocion exitosamente'
+            const prodPromo = await this.client.insertProdEnProdPromo(idProducto, idPromocion, this.tablaPromoProducto)
+            return prodPromo
         } catch (error) {
             throw new CustomError(500, 'Error al asociar un producto con una promocion', err)
         }

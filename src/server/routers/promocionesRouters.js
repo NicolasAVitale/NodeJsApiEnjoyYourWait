@@ -82,6 +82,17 @@ function getPromocionesRouter(){
 
     })
 
+    router.post('/agregarProducto', jwtMdw.ensureAuthenticated, async (req, res) => {
+        try {
+            await promocionesApi.agregarProductoApromocion(req.body.IdProducto, req.body.IdPromocion)
+            const mensaje = { "mensaje": "Producto asociado correctamante" }
+            res.status(201).json(mensaje)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     return router;
 }
 
