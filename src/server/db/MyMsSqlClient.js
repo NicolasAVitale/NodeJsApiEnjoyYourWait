@@ -276,10 +276,9 @@ class MyMsSqlClient extends DbClient{
             let result = await pool.request()
                 .input('idCliente', mssql.Int, nuevo.idCliente)
                 .input('cantComensales', mssql.VarChar(50), nuevo.cantComensales)
-                .input('fechaIngFila', mssql.DateTime, nuevo.fechaIngFila)
                 .input('esConfirmado', mssql.TinyInt, nuevo.esConfirmado)
                 .input('activo', mssql.TinyInt, nuevo.activo)
-                .query(`insert into ${tableName} (idCliente,cantComensales,fechaIngFila,fechaEgrFila,esConfirmado,activo) values (@idCliente,@cantComensales,@fechaIngFila,NULL,@esConfirmado,@activo)`)
+                .query(`insert into ${tableName} (idCliente,cantComensales,fechaIngFila,fechaEgrFila,esConfirmado,activo) values (@idCliente,@cantComensales,GETDATE(),NULL,@esConfirmado,@activo)`)
 
             return result
 
