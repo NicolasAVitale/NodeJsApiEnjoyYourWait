@@ -23,19 +23,6 @@ function getClientesRouter() {
             res.status(400).json(err)
         }
     })
-
-
-    router.put('/:guid', jwtMdw.ensureAuthenticated, async (req, res) => {
-
-        const clienteAgregar = req.body
-        try {
-            const clienteAgregado = await clientesApi.agregar(clienteAgregar)
-            res.status(201).json(clienteAgregado)
-        } catch (err) {
-            res.status(err.estado).json(err)
-        }
-
-    })
  
     router.delete('/:id', jwtMdw.ensureAuthenticated, async (req, res) => {
 
