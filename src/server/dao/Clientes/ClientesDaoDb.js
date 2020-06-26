@@ -1,6 +1,7 @@
 import ClientesDao from './ClientesDao.js'
 import CustomError from '../../errores/CustomError.js'
 import DbClientFactory from '../../db/DbClientFactory.js'
+import moment from 'moment'
 
 class ClientesDaoDb extends ClientesDao {
 
@@ -89,7 +90,7 @@ class ClientesDaoDb extends ClientesDao {
             if (datosAcambiar.fechaNacimiento == undefined) {
                 datosAcambiar.fechaNacimiento = await this.getCampoById('fechaNacimiento', id)
                 const fechaNacimiento = new Map(Object.entries(datosAcambiar.fechaNacimiento))
-                datosAcambiar.fechaNacimiento = fechaNacimiento.get('0').fechaNacimiento
+                datosAcambiar.fechaNacimiento = moment(fechaNacimiento.get('0').fechaNacimiento).format('YYYY-MM-DD')
             }
             if (datosAcambiar.activo == undefined) {
                 datosAcambiar.activo = await this.getCampoById('activo', id)
@@ -113,8 +114,7 @@ class ClientesDaoDb extends ClientesDao {
 
     async getCampoById(data, id) {
         try {
-            const campoGet = await this.client.getByID(data, this.tabla, id, this.idName)
-            return campoGet.recordset
+            return await this.client.getByID(data, this.tabla, id, this.idName)
         } catch (err) {
             throw new CustomError(500, 'error al obtener el campo', err)
         }

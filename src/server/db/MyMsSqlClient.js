@@ -203,7 +203,7 @@ class MyMsSqlClient extends DbClient{
     }
 
     async updateById(id, idName, tableName, datos) {
-
+        console.log(datos)
         try {
             let pool = await this.connect()
             let result = await pool.request()
