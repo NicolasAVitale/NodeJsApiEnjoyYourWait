@@ -127,6 +127,15 @@ class ClientesDaoDb extends ClientesDao {
             throw new CustomError(500, 'error al obtener todos los clientes', err)
         }
     }
+    
+    async addEmailGuid(data){
+        try {
+            return await this.client.insertEmailGuid(data, this.tabla) 
+        } catch (err) {
+            throw new CustomError(500, 'error al insertar mail y guid', err)
+        }
+
+    }
 
 }
 

@@ -32,6 +32,10 @@ class ClientesApi {
         return clientAgregado
     }
 
+    async agregarEmailGuid(datos){
+        return await this.clientesDao.addEmailGuid(datos)
+    }
+
     async actualizar(id, datosAactualizar) {
         const clienteActualizado = await this.clientesDao.updateById(id, datosAactualizar)
         return clienteActualizado

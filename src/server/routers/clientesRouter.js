@@ -25,7 +25,7 @@ function getClientesRouter() {
     })
 
 
-    router.post('/', jwtMdw.ensureAuthenticated, async (req, res) => {
+    router.put('/:guid', jwtMdw.ensureAuthenticated, async (req, res) => {
 
         const clienteAgregar = req.body
         try {
@@ -61,8 +61,15 @@ function getClientesRouter() {
 
     })
 
-    router.post('/ingresar', async (req, res) => {
-
+    router.post('/agregarEmail/', async (req, res) => {
+        const datos = req.body
+        try {
+            await clientesApi.agregarEmailGuid(datos)
+            const mensaje = { "mensaje": "ingresado correctamante" }
+            res.status(200).json(mensaje)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
 
     })
 

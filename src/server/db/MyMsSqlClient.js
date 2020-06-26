@@ -298,6 +298,19 @@ class MyMsSqlClient extends DbClient{
             throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
+
+    async insertEmailGuid(emailGuid, tableName) {
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('email', mssql.VarChar(70), emailGuid.email)
+                .input('guid', mssql.VarChar(255), emailGuid.guid)
+                .query(`insert into ${tableName} (email,activo, guid) values (@email,0,@guid)`)
+            return result
+        } catch (error) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
     
 }
 

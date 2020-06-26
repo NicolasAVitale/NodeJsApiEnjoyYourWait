@@ -17,10 +17,10 @@ class Cliente {
 
         const clienteSchema = Joi.object({
             idCliente: Joi.number().integer(),
-            dni: Joi.number().integer().min(1).max(99999999).required(),
-            nombre: Joi.string().alphanum().min(1).max(150).required(),
-            apellido: Joi.string().alphanum().min(1).max(150).required(),
-            email: Joi.string().email(),
+            dni: Joi.number().integer().min(1).max(99999999),
+            nombre: Joi.string().alphanum().min(1).max(150),
+            apellido: Joi.string().alphanum().min(1).max(150),
+            email: Joi.string().email().required(),
             fechaNacimiento: Joi.date().format('YYYY-MM-DD'),
             activo: Joi.number().integer().min(1)
         })
