@@ -11,6 +11,7 @@ class ClientesDaoDb extends ClientesDao {
         this.tabla = 'dbo.Clientes'
         this.idName = 'idCliente'
         this.dniName = 'dni'
+        this.guidName = 'guid'
     }
 
      async getAll() {
@@ -135,6 +136,15 @@ class ClientesDaoDb extends ClientesDao {
             throw new CustomError(500, 'error al insertar mail y guid', err)
         }
 
+    }
+
+    async validGuid(guid) {
+        try {
+            const campoGet = await this.client.getByGuid('email', this.tabla, guid, this.guidName)
+            return campoGet
+        } catch (err) {
+            throw new CustomError(500, 'error al obtener el campo', err)
+        }
     }
 
 }

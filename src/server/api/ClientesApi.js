@@ -52,6 +52,16 @@ class ClientesApi {
             throw new CustomError(400, 'el cliente a ingresar es invalido', error)
         }
     }
+
+    async esGuidValido(guid) {
+        try {
+            
+            const idCliente =  await this.clientesDao.validGuid(guid)
+            return idCliente[0].email
+        } catch (error) {
+            throw new CustomError(400, 'el guid es invalido', error)
+        }
+    }
 }
 
 

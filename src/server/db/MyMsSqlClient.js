@@ -248,6 +248,7 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
+    /* No se usa más ya que usamos email y guid
     async insertCliente(nuevo, tableName) {
 
         try {
@@ -267,6 +268,7 @@ class MyMsSqlClient extends DbClient{
             throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
+    */
 
 
     async insertClientToQueue(nuevo,tableName) {
@@ -308,6 +310,24 @@ class MyMsSqlClient extends DbClient{
                 .query(`insert into ${tableName} (email,activo, guid) values (@email,0,@guid)`)
             return result
         } catch (error) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
+
+    async getByGuid(selectFields, tableName, guid, guidName) {
+
+        try {
+
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('guid', mssql.VarChar(255), guid)
+                .query(`select TOP 1 ${selectFields} from ${tableName} where ${guidName} = @guid`)
+
+            return result.recordset
+
+        } catch (err) {
+
             throw new CustomError(500, 'error en consulta SQL', err)
         }
     }

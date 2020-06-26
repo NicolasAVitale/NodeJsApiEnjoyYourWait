@@ -73,6 +73,17 @@ function getClientesRouter() {
 
     })
 
+    router.get('/validarGuid/:guid', async (req, res) => {
+        try {
+            const email = await clientesApi.esGuidValido(req.params.guid)
+            const mensaje = { "email": email}
+            res.status(200).json(mensaje)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     return router;
 }
 
