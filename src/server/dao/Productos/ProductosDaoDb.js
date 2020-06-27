@@ -80,8 +80,7 @@ class ProductosDaoDb extends ProductosDao {
 
     async getCampoById(data,id){
         try {
-            const campoGet = await this.client.getByID(data, this.tabla, id, this.idName)
-            return campoGet.recordset
+            return await this.client.getByID(data, this.tabla, id, this.idName)
         } catch (err) {
             throw new CustomError(500, 'error al obtener el campo', err)
         }
