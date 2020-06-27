@@ -360,6 +360,40 @@ class MyMsSqlClient extends DbClient{
             throw new CustomError(500, 'error en consulta SQL', err)
         }
     }
+
+    async getProductosByPromocionId(selectFields, tableProductos, tablePromocionProductos, idPromocion) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('idPromocion', mssql.Int, idPromocion)
+                .query(`select ${selectFields} from ${tableProductos} p inner join ${tablePromocionProductos} pp 
+                    on pp.idProducto = p.idProducto where pp.idPromocion = @idPromocion`)
+
+            return result.recordset
+
+        } catch (err) {
+
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
+    async getPromocionesCliente(selectFields, tablePromociones, tablePromocionProductos) {
+
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .query(`select ${selectFields} from ${tablePromociones} p inner join ${tablePromocionProductos} pp 
+                    on pp.idPromocion = p.idPromocion where CAST(GETDATE() as date) >=  p.fechaInicio  
+                    and  CAST(GETDATE() as date) <= p.fechaBaja and p.activo = 1 and esPremio = 0`)
+
+            return result.recordset
+
+        } catch (err) {
+
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
     
 }
 

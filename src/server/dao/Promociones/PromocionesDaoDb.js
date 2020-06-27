@@ -186,6 +186,25 @@ class PromocionesDaoDb extends PromocionesDao {
         }
 
     }
+
+    async getProductosByPromocionId(idPromocion) {
+        try {
+            const productos = await this.client.getProductosByPromocionId('p.idProducto, p.nombre, p.precio, p.idTipo, p.imagen, p.activo', 'dbo.Productos', 'dbo.PromocionProducto', idPromocion)
+            return productos
+        } catch (err) {
+            throw new CustomError(500, 'Error al obtener todas los productos de la promoción', err)
+        }
+    }
+
+    async getPromocionesCliente() {
+        try {
+            const promociones = await this.client.getPromocionesCliente('distinct p.idPromocion, p.descripcion, p.fechaInicio, p.fechaBaja, p.esPremio, p.activo', this.tabla, 'dbo.PromocionProducto')
+            return promociones
+        } catch (err) {
+            throw new CustomError(500, 'Error al obtener todas las promociones', err)
+        }
+    }
+
 }
 
 

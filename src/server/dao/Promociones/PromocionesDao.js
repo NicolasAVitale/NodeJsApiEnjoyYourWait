@@ -34,6 +34,13 @@ class PromocionesDao {
         throw new CustomError(500, 'Falta implementar updateById!')
     }
 
+    async getProductosByPromocionId(idPromocion) {
+        throw new CustomError(500, 'Falta implementar getProductosByPromocionId!')
+    }
+
+    async getPromocionesCliente() {
+        throw new CustomError(500, 'Falta implementar getPromocionesCliente!')
+    }
 }
 
 export default PromocionesDao

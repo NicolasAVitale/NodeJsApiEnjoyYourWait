@@ -24,6 +24,16 @@ class PromocionesApi {
         return promociones
     }
     
+    async buscarPromocionesCliente() {
+        let promociones = await this.promocionesDao.getPromocionesCliente() 
+        return promociones
+    }
+
+    async buscarProductosPromocion(idPromocion) {
+        let productos = await this.promocionesDao.getProductosByPromocionId(idPromocion)
+        return productos
+    }
+    
     async agregar(promoAgregar) {
         PromocionesApi.esPromocionValida(promoAgregar)
         const promoAgregado = await this.promocionesDao.add(promoAgregar)

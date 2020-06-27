@@ -19,6 +19,27 @@ function getPromocionesRouter(){
         }
     })
 
+    router.get('/getPromocionesClientes/', jwtMdw.ensureAuthenticated, async (req, res) => {
+        
+        try {
+            const promociones =  await promocionesApi.buscarPromocionesCliente()
+            res.status(200).json(promociones)
+        } catch (err) {
+            res.status(400).json(err)
+        }
+    })
+
+    router.get('/getProductosPromocion/:id', jwtMdw.ensureAuthenticated, async (req, res) => {
+        
+        try {
+            //const queryParams = new Map(Object.entries(req.query))
+            const productos =  await promocionesApi.buscarProductosPromocion(req.params.id)
+            res.status(200).json(productos)
+        } catch (err) {
+            res.status(400).json(err)
+        }
+    })
+
     router.post('/', jwtMdw.ensureAuthenticated, async (req, res) => {
 
         const promocionesAgregar = req.body
