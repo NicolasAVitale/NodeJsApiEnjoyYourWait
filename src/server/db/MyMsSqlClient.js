@@ -348,7 +348,6 @@ class MyMsSqlClient extends DbClient{
     async getByGuid(selectFields, tableName, guid, guidName) {
 
         try {
-
             let pool = await this.connect()
             let result = await pool.request()
                 .input('guid', mssql.VarChar(255), guid)

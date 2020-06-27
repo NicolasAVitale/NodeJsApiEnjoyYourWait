@@ -156,7 +156,8 @@ class ClientesDaoDb extends ClientesDao {
 
     async validGuid(guid) {
         try {
-            const campoGet = await this.client.getByGuid('email', this.tabla, guid, this.guidName)
+            const search = ['idCliente','email']
+            const campoGet = await this.client.getByGuid(search, this.tabla, guid, this.guidName)
             return campoGet
         } catch (err) {
             throw new CustomError(500, 'error al obtener el campo', err)

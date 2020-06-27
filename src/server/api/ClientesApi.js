@@ -55,9 +55,8 @@ class ClientesApi {
 
     async esGuidValido(guid) {
         try {
-            
-            const idCliente =  await this.clientesDao.validGuid(guid)
-            return idCliente[0].email
+            const cliente =  await this.clientesDao.validGuid(guid)
+            return cliente[0]
         } catch (error) {
             throw new CustomError(400, 'el guid es invalido', error)
         }
