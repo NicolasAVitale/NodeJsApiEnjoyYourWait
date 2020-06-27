@@ -72,6 +72,14 @@ class UsuariosApi {
             throw new CustomError(400, 'No se encontraron datos', error)
         }
     }
+
+    async activar(id) {
+        await this.usuariosDao.enable(id)
+    }
+
+    async desactivar(id) {
+        await this.usuariosDao.disable(id)
+    }
 }
 
 

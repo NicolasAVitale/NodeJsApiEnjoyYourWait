@@ -38,6 +38,13 @@ class UsuariosDao {
         throw new CustomError(500, 'falta implementar login!')
     }
 
+    async enable(id) {
+        throw new CustomError(500, 'falta implementar enable!')
+    }
+
+    async disable(id) {
+        throw new CustomError(500, 'falta implementar disable!')
+    }
 }
 
 export default UsuariosDao

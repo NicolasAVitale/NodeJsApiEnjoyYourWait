@@ -100,6 +100,32 @@ function getUsuariosRouter() {
 
     })
 
+    router.put('/activar/:id', jwtMdw.ensureAuthenticated, async (req, res) => {
+
+        const datos = req.body
+        try {
+            await usuariosApi.activar(req.params.id, datos)
+            const mensaje = { "mensaje": "activado correctamante" }
+            res.status(204).send()
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
+    router.put('/desactivar/:id', jwtMdw.ensureAuthenticated, async (req, res) => {
+
+        const datos = req.body
+        try {
+            await usuariosApi.desactivar(req.params.id, datos)
+            const mensaje = { "mensaje": "desactivado correctamante" }
+            res.status(204).send()
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     return router;
 }
 

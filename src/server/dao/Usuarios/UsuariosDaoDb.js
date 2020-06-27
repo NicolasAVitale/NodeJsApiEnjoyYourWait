@@ -113,6 +113,38 @@ class UsuariosDaoDb extends UsuariosDao {
         }
     }
 
+    async enable(id) {
+        let result
+        try {
+            const datos = `activo = 1`
+            result = await this.client.updateById(id, this.idName, this.tabla, datos)
+        } catch (err) {
+            throw new CustomError(500, 'error al activar el usuario', err)
+        }
+
+        if (result.rowsAffected == 0) {
+            throw new CustomError(404, `no existe un usuario para activar con id: ${id}`, { id })
+        }else{
+            return result
+        }
+
+    }
+
+    async disable(id) {
+        let result
+        try {
+            const datos = `activo = 0`
+            result = await this.client.updateById(id, this.idName, this.tabla, datos)
+        } catch (err) {
+            throw new CustomError(500, 'error al desactivar el usuario', err)
+        }
+
+        if (result.rowsAffected == 0) {
+            throw new CustomError(404, `no existe un usuario para desactivar con id: ${id}`, { id })
+        }else{
+            return result
+        }
+    }
 }
 
 
