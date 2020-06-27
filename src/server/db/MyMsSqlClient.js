@@ -220,12 +220,12 @@ class MyMsSqlClient extends DbClient{
     }
 
     async updateById(id, idName, tableName, datos) {
-        console.log(datos)
+        
         try {
             let pool = await this.connect()
             let result = await pool.request()
                 .query(`update ${tableName} SET ${datos} where ${idName} = ${id}`)
-
+            
             return result
 
         } catch (err) {

@@ -39,9 +39,8 @@ function getClientesRouter() {
 
         const datos = req.body
         try {
-            await clientesApi.actualizar(req.params.id, datos)
-            const mensaje = { "mensaje": "editado correctamante" }
-            res.status(204).json(mensaje)
+            const cliente = await clientesApi.actualizar(req.params.id, datos)
+            res.status(200).json(cliente)
         } catch (err) {
             res.status(err.estado).json(err)
         }

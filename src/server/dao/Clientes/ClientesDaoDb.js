@@ -108,7 +108,8 @@ class ClientesDaoDb extends ClientesDao {
         if (result.rowsAffected == 0) {
             throw new CustomError(404, `no existe un cliente para editar con id: ${id}`, { id })
         } else {
-            return result
+            datosAcambiar.id = id
+            return datosAcambiar
         }
 
     }
