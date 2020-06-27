@@ -48,7 +48,7 @@ function getClientesRouter() {
 
     })
 
-    router.post('/agregarEmail/', async (req, res) => {
+    router.post('/agregarEmail', async (req, res) => {
         const datos = req.body
         try {
             await clientesApi.agregarEmailGuid(datos)

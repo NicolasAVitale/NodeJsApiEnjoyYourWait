@@ -60,6 +60,23 @@ class MyMsSqlClient extends DbClient{
         }
     }
 
+    async getByEmail(selectFields, tableName, email, emailName) {
+
+        try {
+
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('email', mssql.VarChar, email)
+                .query(`select ${selectFields} from ${tableName} where ${emailName} = @email`)
+
+            return result.recordset
+
+        } catch (err) {
+
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
     async getByRol(selectFields, tableName, rol, idName) {
 
         try {
@@ -308,6 +325,19 @@ class MyMsSqlClient extends DbClient{
                 .input('email', mssql.VarChar(70), emailGuid.email)
                 .input('guid', mssql.VarChar(255), emailGuid.guid)
                 .query(`insert into ${tableName} (email,activo, guid) values (@email,0,@guid)`)
+            return result
+        } catch (error) {
+            throw new CustomError(500, 'error en consulta SQL', err)
+        }
+    }
+
+    async updateEmailGuid(emailGuid, tableName) {
+        try {
+            let pool = await this.connect()
+            let result = await pool.request()
+                .input('email', mssql.VarChar(70), emailGuid.email)
+                .input('guid', mssql.VarChar(255), emailGuid.guid)
+                .query(`update ${tableName} set guid = @guid, activo = 0 where email = @email`)
             return result
         } catch (error) {
             throw new CustomError(500, 'error en consulta SQL', err)

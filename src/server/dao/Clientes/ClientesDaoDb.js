@@ -13,6 +13,7 @@ class ClientesDaoDb extends ClientesDao {
         this.idName = 'idCliente'
         this.dniName = 'dni'
         this.guidName = 'guid'
+        this.emailName = 'email'
     }
 
      async getAll() {
@@ -128,10 +129,24 @@ class ClientesDaoDb extends ClientesDao {
             throw new CustomError(500, 'error al obtener todos los clientes', err)
         }
     }
+
+    async getByEmail(email) {
+        try {
+            const clientes = await this.client.getByEmail('*', this.tabla, email, this.emailName)
+            return clientes
+        } catch (err) {
+            throw new CustomError(500, 'error al obtener todos los clientes', err)
+        }
+    }
     
     async addEmailGuid(data){
         try {
-            return await this.client.insertEmailGuid(data, this.tabla) 
+            const existe = await this.getByEmail(data.email)
+            if (existe.length == 0){
+                return await this.client.insertEmailGuid(data, this.tabla) 
+            }else{
+                return await this.client.updateEmailGuid(data, this.tabla) 
+            }
         } catch (err) {
             throw new CustomError(500, 'error al insertar mail y guid', err)
         }
